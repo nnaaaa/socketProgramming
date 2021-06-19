@@ -1,0 +1,27 @@
+Socket TCP:
+-connect [ip server] port [port server]  |oke
+-close |oke
+
+Manage users:
+-login [username]  |oke
+-register [username] |oke
+-change_password  |oke
+-check_user [-option] [username]
+    –find: 
+    –online:
+    –show_date: (dd/mm/yyyy)
+    –show_fullname
+    –show_note
+    –show_all
+    –show_point:
+-setup_inf[-option]
+    –fullname [username]:
+    –date [birthday]: (dd/mm/yyyy)
+    –note [note]: 
+
+Game:
+-start_game -> [Server] List users is online: [listUserOnline]
+-upload_ships [file upload]
+-attack_ship A B
+
+
