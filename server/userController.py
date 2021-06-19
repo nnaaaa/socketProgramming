@@ -2,24 +2,30 @@ import pymongo
 client = pymongo.MongoClient('mongodb+srv://cusa789:123tumodi@cluster0.z53no.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 db = client["Facebook"]
 
-def auth(userParams):
+def postLogin(userParams):
     users = db.users
     user = users.find_one({"account":userParams["account"]})
+    err = {
+        "account": False,
+        "password": False
+    }
     if not user:
-        print("😩 Account doesn't exist")
-        return False
+        err["account"] = True
+        return err
     if userParams["password"] != user["password"]:
-        print("😓 Wrong password")
-        return False
-    else:  
-        return True
+        err["password"] = True
+        return err 
+    return err
 
-def signup(userParams):
+def postRegister(userParams):
     users = db.users
     user = users.find_one({"account":userParams["account"]})
+    err = {
+        "account": False,
+    }
     if user:
-        print("😛 Account does exist")
-        return False
+        err["account"] = True
+        return err
     else:
         users.insert_one(userParams)
-        return True
+        return err
