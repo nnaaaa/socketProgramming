@@ -1,9 +1,9 @@
 import pymongo
 client = pymongo.MongoClient('mongodb+srv://cusa789:123tumodi@cluster0.z53no.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 db = client["Facebook"]
+users = db.users
 
 def postLogin(userParams):
-    users = db.users
     #tìm tài khoản trong database
     user = users.find_one({"account":userParams["account"]})
     err = {
@@ -21,7 +21,6 @@ def postLogin(userParams):
     return err
 
 def postRegister(userParams):
-    users = db.users
     #tìm tài khoản trong database
     user = users.find_one({"account":userParams["account"]})
     err = {
@@ -32,6 +31,12 @@ def postRegister(userParams):
         err["account"] = True
         return err
     else:
+        #xóa lệnh ra khỏi user 
+        userParams.pop("cmd")
         #thêm tài khoản vào database
         users.insert_one(userParams)
         return err
+
+def updatePassword(userParams):
+    userParams.pop("cmd")
+    users.update_one({"account":userParams["account"]},{"$set":userParams})

@@ -11,4 +11,15 @@ def validate(user):
     else:
         return True
 
+def comparePassword(password):
+    oldPassword = getpass.getpass(prompt="password: ")
+    if oldPassword != password:
+        print("Wrong password")
+        return False
+    else:
+        return True
+        
+
+
+
 

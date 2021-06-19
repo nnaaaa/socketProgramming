@@ -29,3 +29,9 @@ def signup(userParams,socket):
         return False
     else:
         return True
+
+def changePassword(userParams,socket):
+    userParams["cmd"] = "changePassword"
+    # gửi tài khoản mật khẩu mới lên server
+    socket.send(bytes(str(userParams),'utf8'))
+    
