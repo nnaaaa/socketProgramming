@@ -11,6 +11,15 @@ def auth(userParams):
     if userParams["password"] != user["password"]:
         print("😓 Wrong password")
         return False
+    else:  
+        return True
+
+def signup(userParams):
+    users = db.users
+    user = users.find_one({"account":userParams["account"]})
+    if user:
+        print("😛 Account does exist")
+        return False
     else:
-        print("💚 Login successfully")  
+        users.insert_one(userParams)
         return True
