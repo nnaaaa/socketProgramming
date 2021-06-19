@@ -35,3 +35,39 @@ def changePassword(userParams,socket):
     # gửi tài khoản mật khẩu mới lên server
     socket.send(bytes(str(userParams),'utf8'))
     
+def checkUser(option,account,socket):
+    obj = {
+        "cmd":option,
+        "account":account
+    }
+    if option == "find":
+        socket.send(bytes(str(obj),'utf8'))
+        exist = socket.recv(1024).decode('utf8')
+        if exist == "True":
+            print(f"🎁 {account} exist")
+        else:
+            print(f"🤷 {account} doesn't exist")
+    # if option == "online":
+    #     socket.send(bytes(f'{option} {userName}','utf8'))
+    #     exist = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    # if option == "show_date":
+    #     socket.send(bytes(f'{option} {userName}','utf8'))
+    #     exist = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    # if option == "show_fullname":
+    #     socket.send(bytes(f'{option} {userName}','utf8'))
+    #     exist = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    # if option == "show_note":
+    #     socket.send(bytes(f'{option} {userName}','utf8'))
+    #     exist = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    # if option == "show_all":
+    #     socket.send(bytes(f'{option} {userName}','utf8'))
+    #     exist = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    # if option == "show_point":
+    #     socket.send(bytes(f'{option} {userName}','utf8'))
+    #     exist = ast.literal_eval(socket.recv(1024).decode('utf8'))
+
+def setInfo(option,account,socket):
+    if option == "fullname":
+        fullName = input("")
+        socket.send(bytes(f'{option} {fullName}','utf8'))
+        exist = ast.literal_eval(socket.recv(1024).decode('utf8'))

@@ -40,3 +40,9 @@ def postRegister(userParams):
 def updatePassword(userParams):
     userParams.pop("cmd")
     users.update_one({"account":userParams["account"]},{"$set":userParams})
+
+def getUser(userParams):
+    user = users.find_one({"account":userParams["account"]})
+    if user:
+        return True
+    return False

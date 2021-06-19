@@ -1,8 +1,9 @@
 import getpass
 import socket
+import numpy
 
 from validation import validate,comparePassword
-from api import signin,signup,changePassword
+from api import signin,signup,changePassword,checkUser,setInfo
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -36,9 +37,7 @@ while True:
             if validate(user):      
                 encrypt = input("🤔 Do you want to encrypt message before sending? ")
                 if encrypt == "Y":
-                    print("encrypt here")    # encrypt code
-                else:
-                    print("no encrypt here")    # no encrypt code
+                    print("encrypt here")    # encrypt ở đây
                 if signin(user,s):
                     print("💚 Login successfully")
                 login = True
@@ -53,10 +52,7 @@ while True:
             if validate(user):
                 encrypt = input("🤔 Do you want to encrypt message before sending? ")
                 if encrypt == "Y":
-                    print("encrypt here")    # encrypt code
-
-                else:
-                    print("no encrypt here")    # no encrypt code
+                    print("encrypt here")    # encrypt ở đây
                 if signup(user,s):
                     print("🎄 Register successfully")  
         else:
@@ -70,10 +66,33 @@ while True:
             user["password"] = getpass.getpass(prompt="new password: ")
             encrypt = input("🤔 Do you want to encrypt message before sending? ")
             if encrypt == "Y":
-                print("encrypt here")    # encrypt code
-            else:
-                print("no encrypt here")    # no encrypt code
+                print("encrypt here")    # encrypt ở đây
             changePassword(user,s)
             print("🥊 Update password successfully")
+    
+    elif chose.split("-")[0] == "check_user":
+        # cắt khoảng trắng lấy được account
+        chose = commandline.split(" ")
+        if len(chose) < 2:
+            continue
+        chose[0] = chose[0].split("-")
+        if len(chose[0]) == 2:
+            option = chose[0][1]
+            account = chose[1]
+            checkUser(option,account,s)
+    
+    elif chose.split("-")[0] == "setup_info":
+        # cắt khoảng trắng lấy được data
+        chose = commandline.split(" ")
+        if len(chose) < 2:
+            continue
+        chose[0] = chose[0].split("-")
+        if len(chose[0]) == 2:
+            option = chose[0][1]
+            account = chose[1]
+            setInfo(option,account,s)
+
+    
+
 
 
