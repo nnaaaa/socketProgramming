@@ -1,6 +1,6 @@
-import getpass
+import stdiomask
+import re
 import socket
-import numpy
 
 from validation import validate,comparePassword
 from api import signin,signup,changePassword,checkUser,setInfo
@@ -67,15 +67,13 @@ while True:
 
     elif chose.split("-")[0] == "check_user":
         # cắt khoảng trắng lấy được account
-        chose = commandline.split(" ")
-        if len(chose) < 2:
+        chose = commandline.replace("-"," ").split(" ")
+        if len(chose) < 3:
             print("🥵 Fail command line")
             continue
-        chose[0] = chose[0].split("-")
-        if len(chose[0]) == 2:
-            option = chose[0][1]
-            account = chose[1]
-            checkUser(option,account,s)
+        option = chose[1]
+        account = chose[2]
+        checkUser(option,account,s)
 
     elif not login:
         continue
@@ -84,7 +82,7 @@ while True:
         if not login:
             print("You haven't signed in")
         if comparePassword(user["password"]):
-            user["password"] = getpass.getpass(prompt="new password: ")
+            user["password"] = stdiomask.getpass("new password: ")
             encrypt = input("🤔 Do you want to encrypt message before sending? ")
             if encrypt == "Y":
                 print("encrypt here")    # encrypt ở đây
@@ -93,16 +91,15 @@ while True:
     
     elif chose.split("-")[0] == "setup_info":
         # cắt khoảng trắng lấy được data
-        chose = commandline.split("\"")
-        if len(chose) < 2:
+        chose = commandline.replace("-"," ")
+        chose = re.split(" ",chose,2)
+        if len(chose) < 3:
             print("🥵 Fail command line")
             continue
-        chose[0] = chose[0].split("-")
-        if len(chose[0]) == 2:
-            option = chose[0][1].strip() # xóa khoảng trắng thừa 2 đầu chuỗi
-            string = chose[1]
-            account = user["account"]
-            setInfo(option,string,account,s)
+        option = chose[1]
+        string = chose[2]
+        account = user["account"]
+        setInfo(option,string,account,s)
 
     
 

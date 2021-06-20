@@ -1,7 +1,8 @@
 import pymongo
-client = pymongo.MongoClient('mongodb+srv://cusa789:123tumodi@cluster0.z53no.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
-db = client["Facebook"]
-users = db.users
+db = pymongo.MongoClient('mongodb+srv://cusa789:123tumodi@cluster0.z53no.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+collection = db["Facebook"]
+
+users = collection.users
 
 def postLogin(userParams):
     #tìm tài khoản trong database
