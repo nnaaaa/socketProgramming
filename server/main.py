@@ -4,15 +4,20 @@ from userController import postLogin,postRegister,getUser,updateUser
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.bind(('0.0.0.0',8000))
 s.listen(5)
+
 usersOnline = []
+
 while True:
     client,addr = s.accept()
     print(f"Client from {addr} connect")
+    account = ""
     while True:
         data = client.recv(1024)
         
         if not data :
             print(f"Client from {addr} disconnect")
+            usersOnline = list(filter(lambda item: item != account,usersOnline))
+            print("👉 listOnline:",usersOnline)
             client.close()
             break
 
@@ -20,11 +25,14 @@ while True:
 
         if data["cmd"] == "login":
             err = postLogin(data)
-            userOnline = list(filter(lambda item: item == data["account"],usersOnline))
+            # kiểm tra xem user đã đăng nhập chưa
+            isOnline = list(filter(lambda item: item == data["account"],usersOnline))
             if not err["account"] and not err["password"]:
                 usersOnline.append(data["account"])
+                account = data["account"]
+                print("👉 listOnline:",usersOnline)
             # nếu đã đăng nhập thì không cho đăng nhập nữa
-            if len(userOnline) != 0 :
+            if len(isOnline) != 0 :
                 err["account"] == True
             client.send(bytes(str(err),'utf8'))
 
@@ -44,9 +52,8 @@ while True:
             client.send(bytes(str(user),'utf8'))
 
         elif (data["cmd"] == "setup_info") or  (data["cmd"] == "changePassword"):
-            # print(type(data),data)
             updateUser(data)
-            
+
 s.close()
 
 
