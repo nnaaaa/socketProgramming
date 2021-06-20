@@ -10,6 +10,12 @@ while True:
     print(f"Client from {addr} connect")
     while True:
         data = client.recv(1024)
+        
+        if not data :
+            print(f"Client from {addr} disconnect")
+            client.close()
+            break
+
         data = ast.literal_eval(data.decode('utf8'))
 
         if data["cmd"] == "login":
@@ -40,7 +46,7 @@ while True:
         elif (data["cmd"] == "setup_info") or  (data["cmd"] == "changePassword"):
             # print(type(data),data)
             updateUser(data)
-    client.close()
+            
 s.close()
 
 

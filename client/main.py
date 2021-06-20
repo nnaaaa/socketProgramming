@@ -26,11 +26,15 @@ while True:
             continue
         ip = array[1]
         port = array[3]
-        s.connect((socket.gethostname(),int(port)))
+        s.connect(('25.0.88.133',int(port)))
         connect = True
 
     elif not connect:
         continue
+
+    elif chose == "close":
+        s.close()
+        break
 
     elif chose == "login":
         chose = commandline.split(" ")
