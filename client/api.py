@@ -97,8 +97,14 @@ def checkUser(option,account,socket):
         else: 
             print(f"🎯 Point of {account} is " + str(user["point"]))
 
-# def setInfo(option,account,socket):
-#     if option == "fullname":
-#         fullName = input("")
-#         socket.send(bytes(f'{option} {fullName}','utf8'))
-#         exist = ast.literal_eval(socket.recv(1024).decode('utf8'))
+def setInfo(option,string,account,socket):
+    obj = {
+        "cmd":"setup_info",
+        option:string,
+        "account":account
+    }
+    if option != "date" and option != "note" and option != "fullname":
+        print("💔 Can't set this information")
+        return
+    socket.send(bytes(str(obj),'utf8'))
+    print(f"🎉 {option} of {account} is {string}")

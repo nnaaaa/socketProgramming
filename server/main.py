@@ -1,6 +1,6 @@
 import socket
 import ast
-from userController import postLogin,postRegister,updatePassword,getUser
+from userController import postLogin,postRegister,getUser,updateUser
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.bind(('0.0.0.0',8000))
 s.listen(5)
@@ -21,12 +21,10 @@ while True:
             if len(userOnline) != 0 :
                 err["account"] == True
             client.send(bytes(str(err),'utf8'))
+
         elif data["cmd"] == "register":
             err = postRegister(data)
             client.send(bytes(str(err),'utf8'))
-
-        elif data["cmd"] == "changePassword":
-            updatePassword(data)
 
         elif data["cmd"] == "online":
             userOnline = list(filter(lambda item: item == data["account"],usersOnline))
@@ -38,6 +36,10 @@ while True:
         elif (data["cmd"] == "find") or (data["cmd"] == "show_fullname") or (data["cmd"] == "show_note") or (data["cmd"] == "show_point") or (data["cmd"] == "show_all") or (data["cmd"] == "show_date"):
             user = getUser(data)
             client.send(bytes(str(user),'utf8'))
+
+        elif (data["cmd"] == "setup_info") or  (data["cmd"] == "changePassword"):
+            # print(type(data),data)
+            updateUser(data)
     client.close()
 s.close()
 

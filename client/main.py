@@ -3,7 +3,7 @@ import socket
 import numpy
 
 from validation import validate,comparePassword
-from api import signin,signup,changePassword,checkUser
+from api import signin,signup,changePassword,checkUser,setInfo
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -22,7 +22,7 @@ while True:
     elif chose == "connect":
         array = commandline.split(" ")
         if len(array)<4:
-            print("🥵 Connection failed")
+            print("🥵 Fail command line")
             continue
         ip = array[1]
         port = array[3]
@@ -65,6 +65,7 @@ while True:
         # cắt khoảng trắng lấy được account
         chose = commandline.split(" ")
         if len(chose) < 2:
+            print("🥵 Fail command line")
             continue
         chose[0] = chose[0].split("-")
         if len(chose[0]) == 2:
@@ -88,14 +89,16 @@ while True:
     
     elif chose.split("-")[0] == "setup_info":
         # cắt khoảng trắng lấy được data
-        chose = commandline.split(" ")
+        chose = commandline.split("\"")
         if len(chose) < 2:
+            print("🥵 Fail command line")
             continue
         chose[0] = chose[0].split("-")
         if len(chose[0]) == 2:
-            option = chose[0][1]
-            account = chose[1]
-            # setInfo(option,account,s)
+            option = chose[0][1].strip() # xóa khoảng trắng thừa 2 đầu chuỗi
+            string = chose[1]
+            account = user["account"]
+            setInfo(option,string,account,s)
 
     
 

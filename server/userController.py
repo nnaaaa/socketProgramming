@@ -39,10 +39,6 @@ def postRegister(userParams):
         users.insert_one(userParams)
         return err
 
-def updatePassword(userParams):
-    userParams.pop("cmd")
-    users.update_one({"account":userParams["account"]},{"$set":userParams})
-
 def getUser(userParams):
     user = users.find_one({"account":userParams["account"]})
     # gỡ id trước khi gửi về client để tránh bị lỗi khi dùng ast
@@ -50,3 +46,10 @@ def getUser(userParams):
     if user:
         return user
     return False
+
+def updateUser(userParams):
+    #xóa lệnh ra khỏi user 
+    userParams.pop("cmd")
+    # update thông tin lên database
+    users.update_one({"account":userParams["account"]},{"$set":userParams})
+
