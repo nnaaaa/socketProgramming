@@ -3,7 +3,7 @@ import socket
 import numpy
 
 from validation import validate,comparePassword
-from api import signin,signup,changePassword,checkUser,setInfo
+from api import signin,signup,changePassword,checkUser
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -18,6 +18,7 @@ while True:
         continue
     if chose == "quit":
         break
+    
     elif chose == "connect":
         array = commandline.split(" ")
         if len(array)<4:
@@ -27,6 +28,7 @@ while True:
         port = array[3]
         s.connect((socket.gethostname(),int(port)))
         connect = True
+
     elif not connect:
         continue
 
@@ -58,6 +60,20 @@ while True:
         else:
             user["account"] = ""
             validate(user)
+
+    elif chose.split("-")[0] == "check_user":
+        # cắt khoảng trắng lấy được account
+        chose = commandline.split(" ")
+        if len(chose) < 2:
+            continue
+        chose[0] = chose[0].split("-")
+        if len(chose[0]) == 2:
+            option = chose[0][1]
+            account = chose[1]
+            checkUser(option,account,s)
+
+    elif not login:
+        continue
     
     elif chose == "change_password":
         if not login:
@@ -70,17 +86,6 @@ while True:
             changePassword(user,s)
             print("🥊 Update password successfully")
     
-    elif chose.split("-")[0] == "check_user":
-        # cắt khoảng trắng lấy được account
-        chose = commandline.split(" ")
-        if len(chose) < 2:
-            continue
-        chose[0] = chose[0].split("-")
-        if len(chose[0]) == 2:
-            option = chose[0][1]
-            account = chose[1]
-            checkUser(option,account,s)
-    
     elif chose.split("-")[0] == "setup_info":
         # cắt khoảng trắng lấy được data
         chose = commandline.split(" ")
@@ -90,7 +95,7 @@ while True:
         if len(chose[0]) == 2:
             option = chose[0][1]
             account = chose[1]
-            setInfo(option,account,s)
+            # setInfo(option,account,s)
 
     
 

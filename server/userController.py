@@ -33,6 +33,8 @@ def postRegister(userParams):
     else:
         #xóa lệnh ra khỏi user 
         userParams.pop("cmd")
+        #khởi tạo điểm
+        userParams["point"] = 0
         #thêm tài khoản vào database
         users.insert_one(userParams)
         return err
@@ -43,6 +45,8 @@ def updatePassword(userParams):
 
 def getUser(userParams):
     user = users.find_one({"account":userParams["account"]})
+    # gỡ id trước khi gửi về client để tránh bị lỗi khi dùng ast
+    user.pop("_id")
     if user:
-        return True
+        return user
     return False
