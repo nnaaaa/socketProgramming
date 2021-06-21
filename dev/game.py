@@ -1,36 +1,36 @@
-from createShip import taoMotTau,sign
+from createShip import Map,taoMotTau,sign,kichThuoc27,kichThuoc25,kichThuoc14,kichThuoc12,kichThuoc11
 
 banDo = []
 soLuongTau = 12
 
-for i in range(0,20):
+for i in range(0,Map["doc"]):
     arr = []
-    for j in range(0,20):
+    for j in range(0,Map["ngang"]):
         arr.append(sign)
     banDo.append(arr)
 
 
-taoMotTau(banDo,{"dai":7,"rong":2})
+taoMotTau(banDo,kichThuoc27)
 
-taoMotTau(banDo,{"dai":5,"rong":2})
-taoMotTau(banDo,{"dai":5,"rong":2})
+taoMotTau(banDo,kichThuoc25)
+taoMotTau(banDo,kichThuoc25)
 
-taoMotTau(banDo,{"dai":4,"rong":1})
-taoMotTau(banDo,{"dai":4,"rong":1})
-taoMotTau(banDo,{"dai":4,"rong":1})
+taoMotTau(banDo,kichThuoc14)
+taoMotTau(banDo,kichThuoc14)
+taoMotTau(banDo,kichThuoc14)
 
-taoMotTau(banDo,{"dai":2,"rong":1})
-taoMotTau(banDo,{"dai":2,"rong":1})
-taoMotTau(banDo,{"dai":2,"rong":1})
+taoMotTau(banDo,kichThuoc12)
+taoMotTau(banDo,kichThuoc12)
+taoMotTau(banDo,kichThuoc12)
 
-taoMotTau(banDo,{"dai":1,"rong":1})
-taoMotTau(banDo,{"dai":1,"rong":1})
-taoMotTau(banDo,{"dai":1,"rong":1})
+taoMotTau(banDo,kichThuoc11)
+taoMotTau(banDo,kichThuoc11)
+taoMotTau(banDo,kichThuoc11)
 
 f = open("viTriTau.txt","w")
-for i in range(0,20):
-    for j in range(0,20):
-        f.write(str(banDo[i][j])+" ")
+for i in range(0,Map["doc"]):
+    for j in range(0,Map["ngang"]):
+        f.write(str(banDo[i][j])+"  ")
     f.write("\n")
 
 
@@ -54,14 +54,6 @@ kích thước tàu :
 2 kích thước : dai,rong 
 2 chiều : ngang,doc
 
-
-1 . góc trên bên trái : X >= 0 , Y >= 0
-2 . góc trên bên phải :(ngang) X + dai <= 19 ,  y >= 0     
-                        (doc) X + rong <= 19 , y >= 0 
-3 . góc dưới bên trái :(ngang) X >= 0 , Y + rong <= 19
-                        (doc) X >= 0 , y + dai <= 19
-4 . góc dưới bên phải :(ngang) X + dai <= 19 , Y + rong <= 19
-                        (doc) X + rong <= 19 , Y + dai <= 19
 
 """
 
