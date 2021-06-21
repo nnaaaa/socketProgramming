@@ -16,7 +16,7 @@ while True:
         
         if not data :
             print(f"Client from {addr} disconnect")
-            usersOnline = list(filter(lambda item: item != account,usersOnline))
+            usersOnline.remove(account)
             print("👉 listOnline:",usersOnline)
             client.close()
             break

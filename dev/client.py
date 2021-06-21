@@ -8,11 +8,15 @@ print(socket.gethostname())
 try:
     while True:
         msg = input('Client: ')
+        # làm game 
+        
+        
+
         if msg == "quit":
             s.close()
             break
 
-        s.send(bytes(msg,'utf8'))
+        s.send(bytes(str(msg),'utf8'))
         data = s.recv(1024)
         print('Server: ',data.decode('utf8'))
 

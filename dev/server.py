@@ -10,7 +10,7 @@ while True:
     try:
         while True:
             msg = client.recv(1024)
-
+            # nhận map bắn tàu trả về client khác 
             if not msg:
                 print("client disconect")
                 client.close()
