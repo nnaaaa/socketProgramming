@@ -1,24 +1,25 @@
 import socket
+import sys
 
-s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-s.connect((socket.gethostname(),8000))
 
-print(socket.gethostname())
+def main():
+    soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    host = "127.0.0.1"
+    port = 8000
+    try:
+        soc.connect((host, port))
+    except:
+        print("Connection Error")
+        sys.exit()
+    print("Please enter 'quit' to exit")
+    message = input(" -> ")
+    while message != 'quit':
+        soc.sendall(message.encode("utf8"))
+        if soc.recv(5120).decode("utf8") == "-":
+            pass  # null operation
+        message = input(" -> ")
+    soc.send(b'--quit--')
 
-try:
-    while True:
-        msg = input('Client: ')
-        # làm game 
-        
-        
 
-        if msg == "quit":
-            s.close()
-            break
-
-        s.send(bytes(str(msg),'utf8'))
-        data = s.recv(1024)
-        print('Server: ',data.decode('utf8'))
-
-finally:
-    print("close")
+if __name__ == "__main__":
+    main()

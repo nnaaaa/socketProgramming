@@ -1,6 +1,6 @@
 import ast
 def signin(userParams,socket):
-    userParams["cmd"] = "login"
+    userParams["auth"] = "login"
     # gửi tài khoản mật khẩu lên server
     socket.send(bytes(str(userParams),'utf8'))
     # server trả lỗi về
@@ -18,7 +18,7 @@ def signin(userParams,socket):
         return True
 
 def signup(userParams,socket):
-    userParams["cmd"] = "register"
+    userParams["auth"] = "register"
     # gửi tài khoản mật khẩu lên server
     socket.send(bytes(str(userParams),'utf8'))
     # server trả lỗi về
@@ -31,13 +31,13 @@ def signup(userParams,socket):
         return True
 
 def changePassword(userParams,socket):
-    userParams["cmd"] = "changePassword"
+    userParams["auth"] = "changePassword"
     # gửi tài khoản mật khẩu mới lên server
     socket.send(bytes(str(userParams),'utf8'))
     
 def checkUser(option,account,socket):
     obj = {
-        "cmd":option,
+        "auth":option,
         "account":account
     }
     if option == "find":
@@ -99,7 +99,7 @@ def checkUser(option,account,socket):
 
 def setInfo(option,string,account,socket):
     obj = {
-        "cmd":"setup_info",
+        "auth":"setup_info",
         option:string,
         "account":account
     }
@@ -108,3 +108,9 @@ def setInfo(option,string,account,socket):
         return
     socket.send(bytes(str(obj),'utf8'))
     print(f"🎉 {option} of {account} is {string}")
+
+def getUsersOnline(socket):
+    obj = {"game":"start_game"}
+    socket.send(bytes(str(obj),'utf8'))
+    listUsers = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    return listUsers

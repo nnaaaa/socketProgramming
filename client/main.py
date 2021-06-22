@@ -3,7 +3,7 @@ import re
 import socket
 
 from validation import validate,comparePassword
-from api import signin,signup,changePassword,checkUser,setInfo
+from api import signin,signup,changePassword,checkUser,setInfo,getUsersOnline
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -12,7 +12,9 @@ login = False
 connect = False
 
 while True:
+    # connect 0.0.0.0 port 8000
     commandline = input()
+    # 
     chose = commandline.split(" ")[0]
     if not chose:
         continue
@@ -20,19 +22,20 @@ while True:
         break
     
     elif chose == "connect":
+        #[connect,0.0.0.0,port,8000]
         array = commandline.split(" ")
         if len(array)<4:
             print("🥵 Fail command line")
             continue
         ip = array[1]
         port = array[3]
-        s.connect(('25.0.88.133',int(port)))
+        s.connect((socket.gethostname(),8000))
         connect = True
 
     elif not connect:
         continue
 
-    elif chose == "close":
+    elif chose == "close":    
         s.close()
         break
 
@@ -77,6 +80,18 @@ while True:
 
     elif not login:
         continue
+    #game--------------------------------------------------------------------------------
+    
+    elif chose == "start_game":
+        usersOnline = getUsersOnline(socket)
+        print(usersOnline)
+
+
+
+
+
+
+    #game--------------------------------------------------------------------------------
     
     elif chose == "change_password":
         if not login:

@@ -33,6 +33,9 @@ for i in range(0,Map["doc"]):
         f.write(str(banDo[i][j])+"  ")
     f.write("\n")
 
+toaDoBan = input("Nhap toa do ban: ")
+
+
 
 """ 
 bản đồ

@@ -21,7 +21,21 @@ Manage users:
 
 Game:
 -start_game -> [Server] List users is online: [listUserOnline]
+->gửi lên server tên người chơi 
+->gửi yêu cầu chơi game tới người
+chơi đó nếu có "online"
+->client_2 chấp nhận 
+    -> gửi lên server đồng ý
+->server nhận đồng ý và 
+tạo room nhét 2 thằng vô (tạo thread)
+
+
+
+
 -upload_ships [file upload]
 -attack_ship A B
+
+
+
 
 
