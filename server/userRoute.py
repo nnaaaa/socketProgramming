@@ -37,5 +37,4 @@ def userRoute(client, data, usersOnline,account):
     elif (data["auth"] == "setup_info") or  (data["auth"] == "changePassword"):
         updateUser(data)
 
-    elif (data["game"] == "start_game"):
-        client.send(bytes(str(usersOnline),'utf8'))
+    

@@ -1,6 +1,7 @@
 import socket
 import ast
 from userRoute import userRoute
+from gameRoute import gameRoute
 from threading import Thread
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -25,6 +26,9 @@ def Client(client,account):
 
         if (data.get("auth")):
             userRoute(client,data,usersOnline,account)
+
+        if (data.get("game")):
+            gameRoute(client,data,usersOnline,account)
 
 
 

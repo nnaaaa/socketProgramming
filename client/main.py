@@ -12,9 +12,7 @@ login = False
 connect = False
 
 while True:
-    # connect 0.0.0.0 port 8000
     commandline = input()
-    # 
     chose = commandline.split(" ")[0]
     if not chose:
         continue
@@ -22,7 +20,6 @@ while True:
         break
     
     elif chose == "connect":
-        #[connect,0.0.0.0,port,8000]
         array = commandline.split(" ")
         if len(array)<4:
             print("🥵 Fail command line")
@@ -80,11 +77,13 @@ while True:
 
     elif not login:
         continue
+
     #game--------------------------------------------------------------------------------
-    
     elif chose == "start_game":
-        usersOnline = getUsersOnline(socket)
-        print(usersOnline)
+        usersOnline = getUsersOnline(s)
+        print("[Server] List users online:")
+        for user in usersOnline:
+            print(f"✅ {user}")
 
 
 
@@ -115,6 +114,8 @@ while True:
         string = chose[2]
         account = user["account"]
         setInfo(option,string,account,s)
+
+    print("-"*50)
 
     
 
