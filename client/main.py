@@ -3,7 +3,8 @@ import re
 import socket
 
 from validation import validate,comparePassword
-from api import signin,signup,changePassword,checkUser,setInfo,getUsersOnline
+from userAPI import signin,signup,changePassword,checkUser,setInfo
+from gameAPI import getUsersOnline
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -84,7 +85,7 @@ while True:
         print("[Server] List users online:")
         for user in usersOnline:
             print(f"✅ {user}")
-
+    
 
 
 
