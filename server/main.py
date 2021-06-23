@@ -10,34 +10,36 @@ s.listen(5)
 print("😋 Server start")
 usersOnline = []
 
-def Client(client,account):
+def Client(client,address):
     while True:
-        data = client.recv(1024)
+        data = client["socket"].recv(1024)
         if not data :
-            print(f"Client from {addr} disconnect")
+            print(f"Client from {address} disconnect")
             # xóa user khỏi danh sách online
-            usersOnline.remove(account["me"])
-            print("👉 listOnline:",usersOnline)
+            usersOnline.remove({
+                "account":client["account"],
+                "socket":client["socket"]
+            })
             #đóng kết nối với user
-            client.close()
+            client["socket"].close()
             break
 
         data = ast.literal_eval(data.decode('utf8'))
 
         if (data.get("auth")):
-            userRoute(client,data,usersOnline,account)
+            userRoute(client,data,usersOnline)
 
         if (data.get("game")):
-            gameRoute(client,data,usersOnline,account)
+            gameRoute(client,data,usersOnline)
 
 
 
 
 while True:
-    client,addr = s.accept()
-    print(f"Client from {addr} connect")
-    account = {}
-    Thread(target=Client,args=(client,account)).start()
+    socketClient,address = s.accept()
+    print(f"Client from {address} connect")
+    client = {"socket":socketClient}
+    Thread(target=Client,args=(client,address)).start()
     
 
 s.close()

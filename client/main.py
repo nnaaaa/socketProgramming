@@ -1,10 +1,11 @@
+
 import stdiomask
 import re
 import socket
 
 from validation import validate,comparePassword
 from userAPI import signin,signup,changePassword,checkUser,setInfo
-from gameAPI import getUsersOnline
+from gameAPI import getUsersOnline,inviteToPlay
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -86,6 +87,16 @@ while True:
         for user in usersOnline:
             print(f"✅ {user}")
     
+    elif chose == "create_room":
+        chose = commandline.split(" ")
+        option = chose[0]
+        room = chose[1]
+        account = chose[2]
+        respond = inviteToPlay(option,room,account,s)
+        if respond["err"] != "":
+            print("🥶 "+respond["err"])
+            continue
+        
 
 
 
