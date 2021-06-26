@@ -12,5 +12,6 @@ def inviteToPlay(option,room,account,socket):
         "account":account
     }
     socket.send(bytes(str(obj),'utf8'))
-    respond = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    respond = socket.recv(1024).decode('utf8')
+    print("start game!!!")
     return respond

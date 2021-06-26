@@ -32,7 +32,7 @@ def postRegister(userParams):
         return err
     else:
         #xóa lệnh ra khỏi user 
-        userParams.pop("cmd")
+        userParams.pop("auth")
         #khởi tạo điểm
         userParams["point"] = 0
         #thêm tài khoản vào database
@@ -49,7 +49,7 @@ def getUser(userParams):
 
 def updateUser(userParams):
     #xóa lệnh ra khỏi user 
-    userParams.pop("cmd")
+    userParams.pop("auth")
     # update thông tin lên database
     users.update_one({"account":userParams["account"]},{"$set":userParams})
 

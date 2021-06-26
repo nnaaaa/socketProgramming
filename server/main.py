@@ -9,6 +9,7 @@ s.bind((socket.gethostname(),8000))
 s.listen(5)
 print("😋 Server start")
 usersOnline = []
+# {"socket":,"account":"...","pending = false"}
 
 def Client(client,address):
     while True:
@@ -16,6 +17,7 @@ def Client(client,address):
         if not data :
             print(f"Client from {address} disconnect")
             # xóa user khỏi danh sách online
+
             usersOnline.remove({
                 "account":client["account"],
                 "socket":client["socket"]
@@ -25,7 +27,8 @@ def Client(client,address):
             break
 
         data = ast.literal_eval(data.decode('utf8'))
-
+        print("data: ",data)
+        
         if (data.get("auth")):
             userRoute(client,data,usersOnline)
 

@@ -1,4 +1,5 @@
 
+import ast
 import stdiomask
 import re
 import socket
@@ -6,6 +7,7 @@ import socket
 from validation import validate,comparePassword
 from userAPI import signin,signup,changePassword,checkUser,setInfo
 from gameAPI import getUsersOnline,inviteToPlay
+from middlewares import receiveData
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -20,7 +22,7 @@ while True:
         continue
     if chose == "quit":
         break
-    
+
     elif chose == "connect":
         array = commandline.split(" ")
         if len(array)<4:
@@ -28,13 +30,17 @@ while True:
             continue
         ip = array[1]
         port = array[3]
-        s.connect((socket.gethostname(),8000))
-        connect = True
+        try:
+            s.connect((socket.gethostname(),8000))
+            connect = True
+        except:
+            connect = False
+        #threading.Thread(target=receiveData,args=(s,False)).start()
 
     elif not connect:
         continue
 
-    elif chose == "close":    
+    elif chose == "close" or chose == "end":    
         s.close()
         break
 
@@ -81,6 +87,18 @@ while True:
         continue
 
     #game--------------------------------------------------------------------------------
+    elif chose == "waiting":
+        data = s.recv(1024).decode('utf8')
+        if 'play-game' in data:
+            chose = input(f"Do you want to play [Y/N] ")
+            if chose == "Y":
+                s.send(bytes(str({"concho":"conchoNguyenThang"}),'utf8'))
+                print("Start game!!!!!!")
+            elif chose == "N":
+                s.send(bytes(str({"concho":"conchoNguyenThang"}),'utf8'))
+            else:
+                print("Cut")
+
     elif chose == "start_game":
         usersOnline = getUsersOnline(s)
         print("[Server] List users online:")
@@ -91,17 +109,12 @@ while True:
         chose = commandline.split(" ")
         option = chose[0]
         room = chose[1]
-        account = chose[2]
+        account = chose[3]
         respond = inviteToPlay(option,room,account,s)
-        if respond["err"] != "":
-            print("🥶 "+respond["err"])
-            continue
+
+    elif chose ==    :
+        #do nothing
         
-
-
-
-
-
     #game--------------------------------------------------------------------------------
     
     elif chose == "change_password":
