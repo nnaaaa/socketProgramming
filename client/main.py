@@ -8,7 +8,6 @@ from authentication.validation import validate,comparePassword
 from api.userAPI import signin,signup,changePassword,checkUser,setInfo
 from api.gameAPI import getUsersOnline,waiting,createRoom
 
-
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 user = {}
