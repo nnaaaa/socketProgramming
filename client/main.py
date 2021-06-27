@@ -4,16 +4,20 @@ import stdiomask
 import re
 import socket
 
-from validation import validate,comparePassword
-from userAPI import signin,signup,changePassword,checkUser,setInfo
-from gameAPI import getUsersOnline,inviteToPlay
-from middlewares import receiveData
+from authentication.validation import validate,comparePassword
+from api.userAPI import signin,signup,changePassword,checkUser,setInfo
+from api.gameAPI import getUsersOnline,waiting,createRoom
+
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
 user = {}
 login = False
 connect = False
+
+
+s.connect((socket.gethostname(),8000))
+connect = True
 
 while True:
     commandline = input()
@@ -22,20 +26,6 @@ while True:
         continue
     if chose == "quit":
         break
-
-    elif chose == "connect":
-        array = commandline.split(" ")
-        if len(array)<4:
-            print("🥵 Fail command line")
-            continue
-        ip = array[1]
-        port = array[3]
-        try:
-            s.connect((socket.gethostname(),8000))
-            connect = True
-        except:
-            connect = False
-        #threading.Thread(target=receiveData,args=(s,False)).start()
 
     elif not connect:
         continue
@@ -74,30 +64,18 @@ while True:
             validate(user)
 
     elif chose.split("-")[0] == "check_user":
-        # cắt khoảng trắng lấy được account
         chose = commandline.replace("-"," ").split(" ")
         if len(chose) < 3:
             print("🥵 Fail command line")
             continue
-        option = chose[1]
-        account = chose[2]
-        checkUser(option,account,s)
+        checkUser(chose[1],chose[2],s)
 
     elif not login:
         continue
 
     #game--------------------------------------------------------------------------------
     elif chose == "waiting":
-        data = s.recv(1024).decode('utf8')
-        if 'play-game' in data:
-            chose = input(f"Do you want to play [Y/N] ")
-            if chose == "Y":
-                s.send(bytes(str({"concho":"conchoNguyenThang"}),'utf8'))
-                print("Start game!!!!!!")
-            elif chose == "N":
-                s.send(bytes(str({"concho":"conchoNguyenThang"}),'utf8'))
-            else:
-                print("Cut")
+        waiting(s)
 
     elif chose == "start_game":
         usersOnline = getUsersOnline(s)
@@ -107,13 +85,12 @@ while True:
     
     elif chose == "create_room":
         chose = commandline.split(" ")
-        option = chose[0]
-        room = chose[1]
-        account = chose[3]
-        respond = inviteToPlay(option,room,account,s)
+        createRoom(chose[0],chose[1],chose[3],s)
 
-    elif chose ==    :
-        #do nothing
+
+
+    # elif chose == "" :
+    #     #do nothing
         
     #game--------------------------------------------------------------------------------
     
@@ -135,10 +112,7 @@ while True:
         if len(chose) < 3:
             print("🥵 Fail command line")
             continue
-        option = chose[1]
-        string = chose[2]
-        account = user["account"]
-        setInfo(option,string,account,s)
+        setInfo(chose[1],chose[2],user["account"],s)
 
     print("-"*50)
 
@@ -146,3 +120,5 @@ while True:
 
 
 
+
+   

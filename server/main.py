@@ -9,11 +9,13 @@ s.bind((socket.gethostname(),8000))
 s.listen(5)
 print("😋 Server start")
 usersOnline = []
-# {"socket":,"account":"...","pending = false"}
+# {"socket":,"account":"..."}
 
 def Client(client,address):
+    enemy = {}
+    
     while True:
-        data = client["socket"].recv(1024)
+        data = client["socket"].recv(4096)
         if not data :
             print(f"Client from {address} disconnect")
             # xóa user khỏi danh sách online
@@ -27,13 +29,12 @@ def Client(client,address):
             break
 
         data = ast.literal_eval(data.decode('utf8'))
-        print("data: ",data)
         
         if (data.get("auth")):
             userRoute(client,data,usersOnline)
 
         if (data.get("game")):
-            gameRoute(client,data,usersOnline)
+            gameRoute(client,data,usersOnline,enemy)
 
 
 

@@ -39,3 +39,22 @@ tạo room nhét 2 thằng vô (tạo thread)
 
 
 
+
+
+
+
+ # elif chose == "connect":
+    #     array = commandline.split(" ")
+    #     if len(array)<4:
+    #         print("🥵 Fail command line")
+    #         continue
+    #     ip = array[1]
+    #     port = array[3]
+    #     try:
+            
+    #     except:
+    #         connect = False
+
+
+
+

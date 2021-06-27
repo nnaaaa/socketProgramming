@@ -5,7 +5,7 @@ def signin(userParams,socket):
     # gửi tài khoản mật khẩu lên server
     socket.send(bytes(str(userParams),'utf8'))
     # server trả lỗi về
-    err = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    err = ast.literal_eval(socket.recv(4096).decode('utf8'))
     # server trả về lỗi tài khoản
     if err["account"]:
         print("😩 Account doesn't exist")
@@ -23,7 +23,7 @@ def signup(userParams,socket):
     # gửi tài khoản mật khẩu lên server
     socket.send(bytes(str(userParams),'utf8'))
     # server trả lỗi về
-    err = ast.literal_eval(socket.recv(1024).decode('utf8'))
+    err = ast.literal_eval(socket.recv(4096).decode('utf8'))
     # server trả về lỗi tài khoản 
     if err["account"]:
         print("😛 Account does exist")
@@ -43,28 +43,28 @@ def checkUser(option,account,socket):
     }
     if option == "find":
         socket.send(bytes(str(obj),'utf8'))
-        user = ast.literal_eval(socket.recv(1024).decode('utf8'))
+        user = ast.literal_eval(socket.recv(4096).decode('utf8'))
         if user == "False":
             print(f"🤷 {account} doesn't exist")
         else:
             print(f"🥽 {account} exist")
     if option == "online":
         socket.send(bytes(str(obj),'utf8'))
-        isOnline = socket.recv(1024).decode('utf8')
+        isOnline = socket.recv(4096).decode('utf8')
         if isOnline == "False":
             print(f"🎃 User is offline")
         else:
             print(f"🎨 User is online")
     if option == "show_date":
         socket.send(bytes(str(obj),'utf8'))
-        user = ast.literal_eval(socket.recv(1024).decode('utf8'))
+        user = ast.literal_eval(socket.recv(4096).decode('utf8'))
         if user == "False":
             print(f"📆 Birthday of {account} is " + user["birthday"])
         else: 
             print(f"🤷 {account} doesn't exist")
     if option == "show_fullname":
         socket.send(bytes(str(obj),'utf8'))
-        user = ast.literal_eval(socket.recv(1024).decode('utf8'))
+        user = ast.literal_eval(socket.recv(4096).decode('utf8'))
         if user == "False":
             print(f"🤷 {account} doesn't exist")
         if "fullname" in user:
@@ -73,7 +73,7 @@ def checkUser(option,account,socket):
             print(f"🍗 Fullname doesn't setup")
     if option == "show_note":
         socket.send(bytes(str(obj),'utf8'))
-        user = ast.literal_eval(socket.recv(1024).decode('utf8'))
+        user = ast.literal_eval(socket.recv(4096).decode('utf8'))
         if user == "False":
             print(f"🤷 {account} doesn't exist")
         if "note" in user:
@@ -82,7 +82,7 @@ def checkUser(option,account,socket):
             print(f"🍗 Note doesn't setup")
     if option == "show_all":
         socket.send(bytes(str(obj),'utf8'))
-        user = ast.literal_eval(socket.recv(1024).decode('utf8'))
+        user = ast.literal_eval(socket.recv(4096).decode('utf8'))
         if user == "False":
             print(f"🤷 {account} doesn't exist")
         else: 
@@ -92,7 +92,7 @@ def checkUser(option,account,socket):
                 print(f"💎 {i}: " + str(user[i]))
     if option == "show_point":
         socket.send(bytes(str(obj),'utf8'))
-        user = ast.literal_eval(socket.recv(1024).decode('utf8'))
+        user = ast.literal_eval(socket.recv(4096).decode('utf8'))
         if user == "False":
             print(f"🤷 {account} doesn't exist")
         else: 

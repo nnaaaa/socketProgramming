@@ -1,30 +1,48 @@
 import ast
-import time
 
-def gameRoute(client,data,usersOnline):
+def gameRoute(client,data,usersOnline,enemy):
     if (data["game"] == "start_game"):
         accounts = list(map(lambda user: user["account"],usersOnline))
         client["socket"].send(bytes(str(accounts),'utf8'))
 
     elif(data["game"] == "create_room"):
         userOnline = list(filter(lambda user: user["account"] == data["account"],usersOnline))
-        userOnline[0]["socket"].send(bytes(str("play-game"),'utf8'))
-        client["socket"].send(bytes(str("play-game"),'utf8'))
-        # user này không online
-        # if len(userOnline) != 0 :
-        #     respond["err"] = "User doesn't online"
-        #     client["socket"].send(bytes(str(respond),'utf8'))
+        #enemy la thang
+        enemy["account"] = userOnline[0]["account"]
+        enemy["socket"] = userOnline[0]["socket"]
+        
+        obj = {
+            "game":"play-game",
+            "account":client["account"],
+            "challengerMap":data["myMap"]
+        }
+        #duc
+        userOnline[0]["socket"].send(bytes(str(obj),'utf8'))
+        
+        
+    elif(data["game"] == "send_map"):
+        obj = {
+            "game":"send_map",
+            "map":data["map"]
+        }
+        #thang
+        enemy["socket"].send(bytes(str(obj),'utf8'))
+        
+    elif(data["game"] == "recv_enemy"):
+        userOnline = list(filter(lambda user: user["account"] == data["account"],usersOnline))
+        enemy["account"] = userOnline[0]["account"]
+        enemy["socket"] = userOnline[0]["socket"]
+        enemy["map"] = data["challengerMap"]
+        print("client:",client["account"])
+        for i in range(0,20):
+            print(enemy["map"][i])
+          
+    elif(data["game"] == "recv_map"):
+        enemy["map"] = data["challengerMap"]
+        print("client:",client["account"])
+        for i in range(0,20):
+            print(enemy["map"][i])
 
-        # gửi thông báo cho user kia
-        # request = {
-        #     "invitation":"create_room",
-        #     "account":client["account"]
-        # }
-        #isAccept = ast.literal_eval(client["socket"].recv(1024).decode("utf8"))
-        #print("accept:", isAccept)
-
-    elif (data["game"] == "waiting"):
-        IsLookingFor = list(filter(lambda user : user["account"] == client["account"],usersOnline))
         
 
 
