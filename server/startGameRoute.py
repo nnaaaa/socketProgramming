@@ -1,6 +1,6 @@
 import ast
 
-def gameRoute(client,data,usersOnline,enemy):
+def startGameRoute(client,data,usersOnline,enemy):
     if (data["game"] == "start_game"):
         accounts = list(map(lambda user: user["account"],usersOnline))
         client["socket"].send(bytes(str(accounts),'utf8'))

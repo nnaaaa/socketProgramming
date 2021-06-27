@@ -1,5 +1,5 @@
 import ast
-from game.game import createMap
+from game.createMap import createMap
 
 def getUsersOnline(socket):
     obj = {"game":"start_game"}

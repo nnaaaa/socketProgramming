@@ -1,0 +1,23 @@
+1. at client account:123
+create_room ... with 123 -> Traceback (most recent call last):
+  File "D:\NA-Workspace\Desktop\mmt\client\main.py", line 88, in <module>
+    createRoom(chose[0],chose[1],chose[3],s)
+  File "D:\NA-Workspace\Desktop\mmt\client\api\gameAPI.py", line 23, in createRoom
+    "challengerMap":enemy["map"]
+KeyError: 'map' 
+
+
+2. at client account:123
+create_room ... with 12 (not online) -> Traceback (most recent call last):
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\threading.py", line 950, in _bootstrap_inner 
+    self.run()
+  File "C:\Users\PC\AppData\Local\Programs\Python\Python39\lib\threading.py", line 888, in run
+    self._target(*self._args, **self._kwargs)
+  File "D:\NA-Workspace\Desktop\mmt\server\main.py", line 37, in Client
+    startGameRoute(client,data,usersOnline,enemy)     
+  File "D:\NA-Workspace\Desktop\mmt\server\startGameRoute.py", line 11, in startGameRoute
+    enemy["account"] = userOnline[0]["account"]       
+IndexError: list index out of range
+
+
+3. if user is waiting doesn't accept the invite
