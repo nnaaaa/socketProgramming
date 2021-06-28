@@ -43,6 +43,10 @@ def startGameRoute(client,data,usersOnline,enemy):
         for i in range(0,20):
             print(enemy["map"][i])
 
+
+
+
+add to conflict
         
 
 
