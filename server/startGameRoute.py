@@ -36,7 +36,7 @@ def startGameRoute(client,data,usersOnline,enemy):
         print("client:",client["account"])
         for i in range(0,20):
             print(enemy["map"][i])
-          
+            
     elif(data["game"] == "recv_map"):
         enemy["map"] = data["challengerMap"]
         print("client:",client["account"])

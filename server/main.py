@@ -45,7 +45,6 @@ while True:
     client = {"socket":socketClient}
     Thread(target=Client,args=(client,address)).start()
     
-
 s.close()
 
 
