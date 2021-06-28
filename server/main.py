@@ -2,7 +2,9 @@ import socket
 import ast
 from userRoute import userRoute
 from startGameRoute import startGameRoute
+from gameRoute import attackRoute,defendRoute
 from threading import Thread
+# from gameRoute import 
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.bind((socket.gethostname(),8000))
@@ -13,17 +15,18 @@ usersOnline = []
 
 def Client(client,address):
     enemy = {}
-    
+    myMap = []
     while True:
         data = client["socket"].recv(4096)
         if not data :
             print(f"Client from {address} disconnect")
             # xóa user khỏi danh sách online
-
-            usersOnline.remove({
-                "account":client["account"],
-                "socket":client["socket"]
-            })
+            if client["login"]:
+                usersOnline.remove({
+                    "account":client["account"],
+                    "socket":client["socket"],
+                    "login":client["login"]
+                })
             #đóng kết nối với user
             client["socket"].close()
             break
@@ -34,15 +37,16 @@ def Client(client,address):
             userRoute(client,data,usersOnline)
 
         if (data.get("game")):
-            startGameRoute(client,data,usersOnline,enemy)
+            startGameRoute(client,data,usersOnline,enemy,myMap)
 
-
+        if (data.get("attack")):
+            attackRoute(client, data, enemy)
 
 
 while True:
     socketClient,address = s.accept()
     print(f"Client from {address} connect")
-    client = {"socket":socketClient}
+    client = {"socket":socketClient,"login":False}
     Thread(target=Client,args=(client,address)).start()
     
 s.close()

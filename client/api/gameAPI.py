@@ -1,5 +1,6 @@
 import ast
 from game.createMap import createMap
+import game.gamePlay
 
 def getUsersOnline(socket):
     obj = {"game":"start_game"}
@@ -9,6 +10,8 @@ def getUsersOnline(socket):
 
 def createRoom(option,room,account,socket):
     client1Map = []
+
+    #1
     createMap(client1Map)
     obj={
         "game":option,
@@ -17,16 +20,25 @@ def createRoom(option,room,account,socket):
         "myMap":client1Map
     }
     socket.send(bytes(str(obj),'utf8'))
+
+    #7
     enemy = ast.literal_eval(socket.recv(4096).decode('utf8'))
-    obj={
-        "game":"recv_map",
-        "challengerMap":enemy["map"]
-    }
-    socket.send(bytes(str(obj),'utf8'))
-    print("Start game!")
+    if enemy["game"] == "send_map_error":
+        print("😪 Fail to invite")
+    else:
+        obj={
+            "game":"recv_map",
+            "challengerMap":enemy["map"]
+        }
+        socket.send(bytes(str(obj),'utf8'))
+        print("Start game!")
+        #while loop game
+        player1_attack(socket, account)
+
 
 
 def waiting(socket):
+    #3
     enemy = ast.literal_eval(socket.recv(4096).decode('utf8'))
     if 'play-game' in enemy["game"]:
         print("😍 " + enemy["account"] + " invite you ")
@@ -47,18 +59,14 @@ def waiting(socket):
                 "game":"send_map",
                 "map":client2Map
             }
-
+            #5
             socket.send(bytes(str(obj),'utf8'))
-        #     dataMap = ast.literal_eval(socket.recv(4096).decode('utf8'))
-        #     obj = {
-        #         "game":"recv_map",
-        #         "map":dataMap
-        #     }
-        #     socket.send(bytes(str(obj),'utf8'))
-            
-        #     print("Start game!!!!!!")
-        # elif chose == "N":
-        #     socket.send(bytes(str({"concho":"conchoNguyenThang-xoa_du_ma_ccount_NguyenThang"}),'utf8'))
+
+            playing = True
+            while playing:
+                player2_defend                
+                
+       
 
 
     

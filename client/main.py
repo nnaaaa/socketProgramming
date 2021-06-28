@@ -1,4 +1,3 @@
-
 import ast
 import stdiomask
 import re
@@ -33,7 +32,7 @@ while True:
         s.close()
         break
 
-    elif chose == "login":
+    elif chose == "login" and login:
         chose = commandline.split(" ")
         if len(chose) == 2:
             user["account"] = chose[1]

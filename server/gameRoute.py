@@ -48,3 +48,13 @@ def isDestroyFullShip(blankMap,enemyMap,sign):
         if blankMap[position["y"]][position["x"]] != "X":
             return False 
     return True
+
+
+
+
+
+
+
+
+
+

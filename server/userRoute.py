@@ -1,6 +1,6 @@
 from userController import postLogin,postRegister,getUser,updateUser
 
-def userRoute(client, data, usersOnline):
+def userRoute(client, data, usersOnline,login):
     if data["auth"] == "login":
         err = postLogin(data)
         # kiểm tra xem user đã đăng nhập chưa
@@ -12,6 +12,7 @@ def userRoute(client, data, usersOnline):
         # nếu không có lỗi gì thì thêm user vào danh sách online
         if not err["account"] and not err["password"]:
             client["account"] = data["account"]
+            client["login"] = True
             usersOnline.append(client)
         
         client["socket"].send(bytes(str(err), 'utf8'))
