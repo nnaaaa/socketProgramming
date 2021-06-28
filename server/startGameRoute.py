@@ -44,9 +44,6 @@ def startGameRoute(client,data,usersOnline,enemy):
             print(enemy["map"][i])
 
 
-
-
-add to conflict
         
 
 
