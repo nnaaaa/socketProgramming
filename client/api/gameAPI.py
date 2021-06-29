@@ -60,10 +60,4 @@ def waiting(socket):
             }
             #5
             socket.send(bytes(str(obj),'utf8'))
-            playerDefend(socket,enemy["account"])              
-                
-       
-
-
-    
-
+            playerDefend(socket,enemy["account"])

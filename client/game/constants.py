@@ -3,7 +3,7 @@ Map = {
     "doc":10
 }
 soLuongTau = 12
-water = "."
+water = "🌊"
 kichThuoc27 = {"dai":7,"rong":2}
 kichThuoc25 = {"dai":5,"rong":2}
 kichThuoc14 = {"dai":4,"rong":1}

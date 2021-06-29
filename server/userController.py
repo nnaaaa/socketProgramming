@@ -53,3 +53,8 @@ def updateUser(userParams):
     # update thông tin lên database
     users.update_one({"account":userParams["account"]},{"$set":userParams})
 
+def updatePoint(userParams):
+    user = users.find_one({"account":userParams["account"]})
+    user["point"] += userParams["point"]
+    users.update_one({"account":userParams["account"]},{"$set":user})
+

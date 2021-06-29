@@ -37,4 +37,5 @@ def userRoute(client, data, usersOnline):
     elif (data["auth"] == "setup_info") or  (data["auth"] == "changePassword"):
         updateUser(data)
 
+
     
