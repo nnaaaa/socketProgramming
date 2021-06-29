@@ -3,18 +3,6 @@ def attackRoute(client, data, enemy,blankMap):
     y = data["position"]["y"] - 1
     primeMap = enemy["primeMap"]
     enemyMap = enemy["map"]
-
-    print("Prime:")
-    for i in range(0,10):
-        print(primeMap[i])
-
-    print("Enemy:")
-    for i in range(0,10):
-        print(enemyMap[i])
-
-    print("Blank:")
-    for i in range(0,10):
-        print(blankMap[i])
     """
     1. "." = water or empty space
     2. "O" = full ship that was hit with bullet
