@@ -1,8 +1,7 @@
-from createShip import Map,taoMotTau,water,kichThuoc27,kichThuoc25,kichThuoc14,kichThuoc12,kichThuoc11
+from game.createShip import taoMotTau
+from game.constants import *
 
-soLuongTau = 12
 
-banDo = []
 def createMap(banDo):
     for i in range(0,Map["doc"]):
         arr = []
@@ -12,25 +11,24 @@ def createMap(banDo):
 
     taoMotTau(banDo,kichThuoc27,"A")
     taoMotTau(banDo,kichThuoc25,"K")
-    taoMotTau(banDo,kichThuoc25,"Q")
+    # taoMotTau(banDo,kichThuoc25,"Q")
     taoMotTau(banDo,kichThuoc14,"J")
-    taoMotTau(banDo,kichThuoc14,"9")
-    taoMotTau(banDo,kichThuoc14,"8")
+    # taoMotTau(banDo,kichThuoc14,"9")
+    # taoMotTau(banDo,kichThuoc14,"8")
     taoMotTau(banDo,kichThuoc12,"7")
-    taoMotTau(banDo,kichThuoc12,"6")
-    taoMotTau(banDo,kichThuoc12,"5")
-    taoMotTau(banDo,kichThuoc11,"4")
-    taoMotTau(banDo,kichThuoc11,"3")
+    # taoMotTau(banDo,kichThuoc12,"6")
+    # taoMotTau(banDo,kichThuoc12,"5")
+    # taoMotTau(banDo,kichThuoc11,"4")
+    # taoMotTau(banDo,kichThuoc11,"3")
     taoMotTau(banDo,kichThuoc11,"2")
 
 
-createMap(banDo)
 
-f = open("client/game/viTriTau.txt","w")
-for i in range(0,Map["doc"]):
-    for j in range(0,Map["ngang"]):
-        f.write(str(banDo[i][j])+"  ")
-    f.write("\n")
+# f = open("game/viTriTau.txt","w")
+# for i in range(0,Map["doc"]):
+#     for j in range(0,Map["ngang"]):
+#         f.write(str(banDo[i][j])+"  ")
+#     f.write("\n")
 
 
 

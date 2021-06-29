@@ -1,15 +1,6 @@
 import random
+from game.constants import *
 
-Map = {
-    "ngang":20,
-    "doc":20
-}
-water = "."
-kichThuoc27 = {"dai":7,"rong":2}
-kichThuoc25 = {"dai":5,"rong":2}
-kichThuoc14 = {"dai":4,"rong":1}
-kichThuoc12 = {"dai":2,"rong":1}
-kichThuoc11 = {"dai":1,"rong":1}
 
 def taoMotTau(banDo,kichThuoc,sign):
     while True:
@@ -56,22 +47,3 @@ def xetTrungTau(banDo,kichThuoc,viTri,chieuDoc):
 
     return False
 
-
-
-# def xetKichThuoc(kichThuoc):
-#     if kichThuoc["dai"]*kichThuoc["rong"] == 14:
-#         return tau27
-
-#     if kichThuoc["dai"]*kichThuoc["rong"] == 10:
-#         return tau25
-
-#     if kichThuoc["dai"]*kichThuoc["rong"] == 4:
-#         return tau14
-
-#     if kichThuoc["dai"]*kichThuoc["rong"] == 2:
-#         return tau12
-
-#     if kichThuoc["dai"]*kichThuoc["rong"] == 1:
-#         return tau11
-
-    

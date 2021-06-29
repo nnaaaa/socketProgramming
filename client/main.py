@@ -32,7 +32,7 @@ while True:
         s.close()
         break
 
-    elif chose == "login" and login:
+    elif chose == "login" and not login:
         chose = commandline.split(" ")
         if len(chose) == 2:
             user["account"] = chose[1]
@@ -42,7 +42,7 @@ while True:
                     print("encrypt here")    # encrypt ở đây
                 if signin(user,s):
                     print("💚 Login successfully")
-                login = True
+                    login = True
         else:
             user["account"] = ""
             validate(user)

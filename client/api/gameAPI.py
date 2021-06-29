@@ -1,6 +1,6 @@
 import ast
 from game.createMap import createMap
-import game.gamePlay
+from game.gamePlay import playerAttack,playerDefend
 
 def getUsersOnline(socket):
     obj = {"game":"start_game"}
@@ -17,7 +17,7 @@ def createRoom(option,room,account,socket):
         "game":option,
         "room":room,
         "account":account,
-        "myMap":client1Map
+        "challengerMap":client1Map
     }
     socket.send(bytes(str(obj),'utf8'))
 
@@ -28,12 +28,11 @@ def createRoom(option,room,account,socket):
     else:
         obj={
             "game":"recv_map",
-            "challengerMap":enemy["map"]
+            "accepterMap":enemy["accepterMap"]
         }
         socket.send(bytes(str(obj),'utf8'))
         print("Start game!")
-        #while loop game
-        player1_attack(socket, account)
+        playerAttack(socket,account)
 
 
 
@@ -57,14 +56,11 @@ def waiting(socket):
 
             obj ={
                 "game":"send_map",
-                "map":client2Map
+                "accepterMap":client2Map
             }
             #5
             socket.send(bytes(str(obj),'utf8'))
-
-            playing = True
-            while playing:
-                player2_defend                
+            playerDefend(socket,enemy["account"])              
                 
        
 

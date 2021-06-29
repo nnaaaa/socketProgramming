@@ -16,7 +16,7 @@ def startGameRoute(client,data,usersOnline,enemy,myMap):
             obj = {
                 "game":"play-game",
                 "account":client["account"],
-                "challengerMap":data["myMap"]
+                "challengerMap":data["challengerMap"]
             }
             #duc
             enemy["socket"].send(bytes(str(obj),'utf8'))
@@ -31,7 +31,7 @@ def startGameRoute(client,data,usersOnline,enemy,myMap):
         #6
         obj = {
             "game":"send_map",
-            "map":data["map"]
+            "accepterMap":data["accepterMap"]
         }
         #thang
         enemy["socket"].send(bytes(str(obj),'utf8'))
@@ -41,24 +41,53 @@ def startGameRoute(client,data,usersOnline,enemy,myMap):
         userOnline = list(filter(lambda user: user["account"] == data["account"],usersOnline))
         enemy["account"] = userOnline[0]["account"]
         enemy["socket"] = userOnline[0]["socket"]
-        enemy["map"] = data["challengerMap"].copy()
-        enemy["creMap"] = data["challengerMap"].copy()
+       
+        arr1 = []
+        arr2 = []
+        for i in range(0,10):
+            b1 = []
+            b2 = []
+            for j in range(0,10):
+                b1.append(data["challengerMap"][i][j])
+                b2.append(data["challengerMap"][i][j])
+            arr1.append(b1)
+            arr2.append(b2)
 
-        for i in range(0,20):
+        enemy["map"] = arr1
+        enemy["primeMap"] = arr2
+
+
+        for i in range(0,10):
             arr = []
-            for j in range(0,20):
+            for j in range(0,10):
                 arr.append(".")
             myMap.append(arr)
+        client["socket"].send(bytes(str(myMap),'utf8'))
+        
 
     elif(data["game"] == "recv_map"):
         #8 
-        enemy["map"] = data["challengerMap"].copy()
-        enemy["creMap"] = data["challengerMap"].copy()
-        for i in range(0,20):
+        arr1 = []
+        arr2 = []
+        for i in range(0,10):
+            b1 = []
+            b2 = []
+            for j in range(0,10):
+                b1.append(data["accepterMap"][i][j])
+                b2.append(data["accepterMap"][i][j])
+            arr1.append(b1)
+            arr2.append(b2)
+
+        enemy["map"] = arr1
+        enemy["primeMap"] = arr2
+
+        
+        for i in range(0,10):
             arr = []
-            for j in range(0,20):
+            for j in range(0,10):
                 arr.append(".")
             myMap.append(arr)
+        client["socket"].send(bytes(str(myMap),'utf8'))
 
 
 

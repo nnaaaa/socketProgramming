@@ -1,55 +1,52 @@
 def attackRoute(client, data, enemy,blankMap):
     x = data["position"]["x"] - 1
     y = data["position"]["y"] - 1
+    primeMap = enemy["primeMap"]
     enemyMap = enemy["map"]
-    #enemy={
-    # "socket","map","account"
-    # }
 
+    print("Prime:")
+    for i in range(0,10):
+        print(primeMap[i])
+
+    print("Enemy:")
+    for i in range(0,10):
+        print(enemyMap[i])
+
+    print("Blank:")
+    for i in range(0,10):
+        print(blankMap[i])
     """
     1. "." = water or empty space
     2. "O" = full ship that was hit with bullet
     3. "X" = part of ship that was hit with bullet
     4. "#" = water that was shot with bullet, a miss because it hit no ship
-
-    
     """
-
-
-    if enemyMap[y][x] == ".":
+    if primeMap[y][x] == ".":
+        enemyMap[y][x] = "#"
         blankMap[y][x] = "#"
     else: 
+        enemyMap[y][x] = "X"
         blankMap[y][x] = "X"
-        sign = enemyMap[y][x]
-        if isDestroyFullShip(blankMap,enemyMap,sign):
-            for i in range(0,20):
-                for j in range(0,20):
-                    if enemyMap[i][j] == sign:
+        sign = primeMap[y][x]
+        print(sign)
+        if isDestroyFullShip(blankMap,primeMap,sign):
+            for i in range(0,10):
+                for j in range(0,10):
+                    if primeMap[i][j] == sign:
                         blankMap[i][j] = "O"
+                        enemyMap[i][j] = "O"
 
     client["socket"].send(bytes(str(blankMap),'utf8'))
-    enemy["socket"].send()
+    enemy["socket"].send(bytes(str(enemyMap),'utf8'))
 
 
-
-
-
-def findFullShip(enemyMap,sign):
-    pos = []
-    for i in range(0,20):
-        for j in range(0,20):
-            if enemyMap[i][j] == sign:
-                pos.append({"y":i,"x":j})
-    return pos
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-def isDestroyFullShip(blankMap,enemyMap,sign):
-    fullShip = findFullShip(enemyMap,sign)
-    for position in fullShip:
-        if blankMap[position["y"]][position["x"]] != "X":
-            return False 
+def isDestroyFullShip(blankMap,primeMap,sign):
+    for i in range(0,10):
+        for j in range(0,10):
+            if primeMap[i][j] == sign and blankMap[i][j] != "X":
+                return False
+    
     return True
-
-
 
 
 

@@ -2,7 +2,7 @@ import socket
 import ast
 from userRoute import userRoute
 from startGameRoute import startGameRoute
-from gameRoute import attackRoute,defendRoute
+from gameRoute import attackRoute
 from threading import Thread
 # from gameRoute import 
 
@@ -40,7 +40,7 @@ def Client(client,address):
             startGameRoute(client,data,usersOnline,enemy,myMap)
 
         if (data.get("attack")):
-            attackRoute(client, data, enemy)
+            attackRoute(client, data, enemy,myMap)
 
 
 while True:

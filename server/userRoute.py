@@ -1,6 +1,6 @@
 from userController import postLogin,postRegister,getUser,updateUser
 
-def userRoute(client, data, usersOnline,login):
+def userRoute(client, data, usersOnline):
     if data["auth"] == "login":
         err = postLogin(data)
         # kiểm tra xem user đã đăng nhập chưa
