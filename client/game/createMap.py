@@ -24,11 +24,5 @@ def createMap(banDo):
 
 
 
-# f = open("game/viTriTau.txt","w")
-# for i in range(0,Map["doc"]):
-#     for j in range(0,Map["ngang"]):
-#         f.write(str(banDo[i][j])+"  ")
-#     f.write("\n")
-
 
 

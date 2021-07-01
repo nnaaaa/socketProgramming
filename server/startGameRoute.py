@@ -1,4 +1,5 @@
-import ast
+water = "🌊"
+
 
 def startGameRoute(client,data,usersOnline,enemy,myMap):
     if (data["game"] == "start_game"):
@@ -75,7 +76,7 @@ def createBlankMap(Map):
     for i in range(0,10):
         arr = []
         for j in range(0,10):
-            arr.append("🌊")
+            arr.append(water)
         Map.append(arr)
 
 
