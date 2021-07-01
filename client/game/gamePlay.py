@@ -40,7 +40,6 @@ def playerAttack(socket,account):
 def playerDefend(socket,account):
     playing = True 
     blankMap = ast.literal_eval(socket.recv(4096).decode('utf8'))
-    f = open("client/game/viTriTau.txt","w")
     while playing:
         print(f"⛳ Waiting for {account}'s attack...")
         me = ast.literal_eval(socket.recv(4096).decode('utf8'))
