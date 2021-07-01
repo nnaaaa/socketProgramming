@@ -1,5 +1,5 @@
-import socket
 import ast
+from game.constants import *
 
 def playerAttack(socket,account):
     playing = True 
@@ -27,10 +27,11 @@ def playerAttack(socket,account):
         target = me["target"]
 
         print(target)
-        print(f"🎨 Your Map -----------------------------------------")
-        displayMap(updatedMap)
         if "Winner" in target or "Loser" in target :
             break
+        print(f"🎨 Your Map -----------------------------------------")
+        displayMap(updatedMap)
+        
         
 
 
@@ -44,10 +45,11 @@ def playerDefend(socket,account):
         updatedMap = me["map"]
         target = me["target"]
         print(target)
-        print("🎨 Your Map -----------------------------------------")
-        displayMap(updatedMap)
         if "Winner" in target or "Loser" in target:
             break
+        print("🎨 Your Map -----------------------------------------")
+        displayMap(updatedMap)
+        
         print("🧩 Enemy Map ----------------------------------------")
         displayMap(blankMap)
 
@@ -83,7 +85,7 @@ def checkInput(blankMap):
             if not 0 <= y < 10 or not 0 <= x < 10:
                 isFailSyntax = True
 
-    if blankMap[y][x] == "🌊":
+    if blankMap[y][x] == water:
         isDuplicate = False
 
     
@@ -99,7 +101,7 @@ def checkInput(blankMap):
                 if not 0 <= y < 10 or not 0 <= x < 10:
                     isFailSyntax = True
 
-        if blankMap[y][x] == "🌊":
+        if blankMap[y][x] == water:
             isDuplicate = False
     
     return [int(chose[2]),int(chose[1])]

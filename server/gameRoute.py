@@ -1,5 +1,11 @@
 from userController import updatePoint
 
+water = "🌊"
+missed = "🚫"
+hit = "❌"
+full = "⭕"
+
+
 def attackRoute(client, data, enemy,blankMap):
     x = data["position"]["x"] - 1
     y = data["position"]["y"] - 1
@@ -16,12 +22,12 @@ def attackRoute(client, data, enemy,blankMap):
     """
     targetMe = "You missed, no ship was shot 👎"
     targetEnemy = "Enemy missed, no ship was shot 👎"
-    if primeMap[y][x] == "🌊":
-        enemyMap[y][x] = "❌"
-        blankMap[y][x] = "❌"
+    if primeMap[y][x] == water:
+        enemyMap[y][x] = missed
+        blankMap[y][x] = missed
     else: 
-        enemyMap[y][x] = "🎯"
-        blankMap[y][x] = "🎯"
+        enemyMap[y][x] = hit
+        blankMap[y][x] = hit
         targetMe = "You hit 🌋 !"
         targetEnemy = "Enemy hit 🌋 !"
         
@@ -33,8 +39,8 @@ def attackRoute(client, data, enemy,blankMap):
             for i in range(0,10):
                 for j in range(0,10):
                     if primeMap[i][j] == sign:
-                        blankMap[i][j] = "✅"
-                        enemyMap[i][j] = "✅"
+                        blankMap[i][j] = full
+                        enemyMap[i][j] = full
     if isEndGame(primeMap,blankMap):
         targetMe = "🥇 Winner winner chicken dinner!!!"
         targetEnemy = "🤏 Loser!"
@@ -57,7 +63,7 @@ def attackRoute(client, data, enemy,blankMap):
 def isDestroyFullShip(blankMap,primeMap,sign):
     for i in range(0,10):
         for j in range(0,10):
-            if primeMap[i][j] == sign and blankMap[i][j] != "🎯":
+            if primeMap[i][j] == sign and blankMap[i][j] != hit:
                 return False
     
     return True
@@ -66,7 +72,7 @@ def isDestroyFullShip(blankMap,primeMap,sign):
 def isEndGame(primeMap,blankMap):  
     for i in range(0,10):
         for j in range(0,10):
-            if primeMap[i][j] != "🌊" and blankMap[i][j] != "✅":
+            if primeMap[i][j] != water and blankMap[i][j] != full:
                 return False
     return True
     
