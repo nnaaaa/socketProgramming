@@ -31,6 +31,7 @@ def playerAttack(socket,account):
             break
         print(f"🎨 Your Map -----------------------------------------")
         displayMap(updatedMap)
+
         
         
 
@@ -39,6 +40,7 @@ def playerAttack(socket,account):
 def playerDefend(socket,account):
     playing = True 
     blankMap = ast.literal_eval(socket.recv(4096).decode('utf8'))
+    f = open("client/game/viTriTau.txt","w")
     while playing:
         print(f"⛳ Waiting for {account}'s attack...")
         me = ast.literal_eval(socket.recv(4096).decode('utf8'))
@@ -66,9 +68,9 @@ def playerDefend(socket,account):
         if "Winner" in target or "Loser" in target:
             break
 
-def displayMap(mmap):
-    for i in mmap:
-        print(f"{i[0]} {i[1]} {i[2]} {i[3]} {i[4]} {i[5]} {i[6]} {i[7]} {i[8]} {i[9]}")
+def displayMap(enemyMap):
+    for i in range(0,10):
+        print(f"{enemyMap[i][0]} {enemyMap[i][1]} {enemyMap[i][2]} {enemyMap[i][3]} {enemyMap[i][4]} {enemyMap[i][5]} {enemyMap[i][6]} {enemyMap[i][7]} {enemyMap[i][8]} {enemyMap[i][9]}")
 
 def checkInput(blankMap):
     isDuplicate = True
