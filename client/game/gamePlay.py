@@ -1,20 +1,29 @@
 import ast
+import pygame
 from game.constants import *
 
-def playerAttack(socket,account):
+atlas = {
+    "blank":[],
+    "updated":[],
+    "playing":True,
+    "waiting":True
+}
+
+
+def playerAttack(socket,myMap,account):
     playing = True 
-    blankMap = ast.literal_eval(socket.recv(4096).decode('utf8'))
+    atlas["blank"] = ast.literal_eval(socket.recv(9216).decode('utf8'))
+    atlas["updated"] = myMap
     while playing:
         print("🧩 Enemy Map ----------------------------------------")
         displayMap(blankMap)
 
-        x,y = checkInput(blankMap)
         obj = {
             "attack":True,
             "position":{"x":x,"y":y}     
         }
         socket.send(bytes(str(obj),'utf8'))
-        enemy = ast.literal_eval(socket.recv(4096).decode('utf8'))
+        enemy = ast.literal_eval(socket.recv(9216).decode('utf8'))
         blankMap = enemy["map"]
         target = enemy["target"]
         print(target)
@@ -22,7 +31,7 @@ def playerAttack(socket,account):
             break
 
         print(f"⛳ Waiting for {account}'s attack...")
-        me = ast.literal_eval(socket.recv(4096).decode('utf8'))
+        me = ast.literal_eval(socket.recv(9216).decode('utf8'))
         updatedMap = me["map"]
         target = me["target"]
 
@@ -31,18 +40,20 @@ def playerAttack(socket,account):
             break
         print(f"🎨 Your Map -----------------------------------------")
         displayMap(updatedMap)
-
+        #--------------------------------------------------------------
         
         
+        
 
 
 
-def playerDefend(socket,account):
+def playerDefend(socket,myMap,account):
     playing = True 
-    blankMap = ast.literal_eval(socket.recv(4096).decode('utf8'))
+    atlas["blank"] = ast.literal_eval(socket.recv(9216).decode('utf8'))
+    atlas["updated"] = myMap
     while playing:
         print(f"⛳ Waiting for {account}'s attack...")
-        me = ast.literal_eval(socket.recv(4096).decode('utf8'))
+        me = ast.literal_eval(socket.recv(9216).decode('utf8'))
         updatedMap = me["map"]
         target = me["target"]
         print(target)
@@ -60,50 +71,25 @@ def playerDefend(socket,account):
             "position":{"x":x,"y":y} 
         }
         socket.send(bytes(str(obj),'utf8'))
-        enemy = ast.literal_eval(socket.recv(4096).decode('utf8'))
+        enemy = ast.literal_eval(socket.recv(9216).decode('utf8'))
         blankMap = enemy["map"]
         target = enemy["target"]
         print(target)
         if "Winner" in target or "Loser" in target:
             break
 
+
 def displayMap(enemyMap):
+
     for i in range(0,10):
         print(f"{enemyMap[i][0]} {enemyMap[i][1]} {enemyMap[i][2]} {enemyMap[i][3]} {enemyMap[i][4]} {enemyMap[i][5]} {enemyMap[i][6]} {enemyMap[i][7]} {enemyMap[i][8]} {enemyMap[i][9]}")
 
-def checkInput(blankMap):
-    isDuplicate = True
-    isFailSyntax = True
-    commandline = input("🎮 This is your turn (y,x): ") 
-    chose = commandline.split(" ")
-    y = 1
-    x = 1
-    if commandline != "":
-        if len(chose) == 3 and chose[0] == "attack":
-            isFailSyntax = False
-            y = int(chose[1]) - 1
-            x = int(chose[2]) - 1
-            if not 0 <= y < 10 or not 0 <= x < 10:
-                isFailSyntax = True
 
-    if blankMap[y][x] == water:
-        isDuplicate = False
 
-    
-    while isDuplicate or isFailSyntax:
-        print("🤮 You have chosen this position")
-        commandline = input("👉 Please chose again (y,x): ") 
-        chose = commandline.split(" ")
-        if commandline != "":
-            if len(chose) == 3 and chose[0] == "attack":
-                isFailSyntax = False
-                y = int(chose[1]) - 1
-                x = int(chose[2]) - 1
-                if not 0 <= y < 10 or not 0 <= x < 10:
-                    isFailSyntax = True
 
-        if blankMap[y][x] == water:
-            isDuplicate = False
-    
-    return [int(chose[2]),int(chose[1])]
+def handle_mouse_click(atlas,pos):
+    for i in atlas:
+        for j in i:
+            if j["pos"][0] < pos[0] < j["pos"][0] + 30 and j["pos"][1] < pos[1] < j["pos"][1] + 30:
+                j["sprite"] = pygame.transform.scale(pygame.image.load("assets/cancel.png"),(30,30))
 

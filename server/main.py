@@ -17,7 +17,7 @@ def Client(client,address):
     enemy = {}
     myMap = []
     while True:
-        data = client["socket"].recv(4096)
+        data = client["socket"].recv(9216)
         if not data :
             print(f"Client from {address} disconnect")
             # xóa user khỏi danh sách online

@@ -27,22 +27,26 @@ def taoTau(banDo,viTri,kichThuoc,chieuDoc,sign):
         for i in range(viTri["x"],viTri["x"]+kichThuoc["rong"]):
             for j in range(viTri["y"],viTri["y"]+kichThuoc["dai"]):
                 banDo[i][j] = sign
+
+
     if not chieuDoc:
         for i in range(viTri["x"],viTri["x"]+kichThuoc["dai"]):
             for j in range(viTri["y"],viTri["y"]+kichThuoc["rong"]):
                 banDo[i][j] = sign
 
+
+
 def xetTrungTau(banDo,kichThuoc,viTri,chieuDoc):
     if chieuDoc:
         for i in range(viTri["x"], viTri["x"] + kichThuoc["rong"]):
             for j in range(viTri["y"], viTri["y"] + kichThuoc["dai"]):
-                if banDo[i][j] != water:
+                if banDo[i][j] != "water":
                     return True
 
     if not chieuDoc:
         for i in range(viTri["x"], viTri["x"] + kichThuoc["dai"]):
             for j in range(viTri["y"], viTri["y"] + kichThuoc["rong"]):
-                if banDo[i][j] != water:
+                if banDo[i][j] != "water":
                     return True
 
     return False

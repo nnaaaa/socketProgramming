@@ -1,5 +1,3 @@
-water = "🌊"
-
 
 def startGameRoute(client,data,usersOnline,enemy,myMap):
     if (data["game"] == "start_game"):
@@ -65,26 +63,16 @@ def startGameRoute(client,data,usersOnline,enemy,myMap):
 
 def copyMap(data):
     arr = []
-    for i in range(0,10):
+    for i in range(0,20):
         clone = []
-        for j in range(0,10):
+        for j in range(0,20):
             clone.append(data[i][j])
         arr.append(clone)
     return arr
 
 def createBlankMap(Map):
-    for i in range(0,10):
+    for i in range(0,20):
         arr = []
-        for j in range(0,10):
-            arr.append(water)
+        for j in range(0,20):
+            arr.append("water")
         Map.append(arr)
-
-
-        
-
-
-
-
-
-        
-        
