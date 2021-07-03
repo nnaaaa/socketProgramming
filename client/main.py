@@ -15,7 +15,7 @@ login = False
 connect = False
 
 
-s.connect(("26.69.245.250",8000))
+s.connect((socket.gethostname(),8000))
 connect = True
 
 while True:
@@ -84,6 +84,9 @@ while True:
     
     elif chose == "create_room":
         chose = commandline.split(" ")
+        if len(chose) < 3:
+            print("🥵 Fail command line")
+            continue
         createRoom(chose[0],chose[1],chose[3],s)
 
     #game--------------------------------------------------------------------------------

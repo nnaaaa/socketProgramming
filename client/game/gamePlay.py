@@ -11,16 +11,19 @@ def playerAttack(socket,myMap,account):
     while atlas.playing:
         enemy = ast.literal_eval(socket.recv(9216).decode('utf8'))
         atlas.blankMap = enemy["map"]
-        target = enemy["target"]
-        if "Winner" in target or "Loser" in target:
+        atlas.status = enemy["target"]
+        if "Winner" in atlas.status or "Loser" in atlas.status:
             atlas.playing = False
+            break
+
 
         me = ast.literal_eval(socket.recv(9216).decode('utf8'))
         atlas.waiting = False
         atlas.myMap = me["map"]
-        target = me["target"]
-        if "Winner" in target or "Loser" in target:
+        atlas.status = me["target"]
+        if "Winner" in atlas.status or "Loser" in atlas.status:
             atlas.playing = False
+            break
      
         
 def playerDefend(socket,myMap,account):
@@ -31,14 +34,14 @@ def playerDefend(socket,myMap,account):
         me = ast.literal_eval(socket.recv(9216).decode('utf8'))
         atlas.waiting = False
         atlas.myMap = me["map"]
-        target = me["target"]
-        if "Winner" in target or "Loser" in target:
+        atlas.status = me["target"]
+        if "Winner" in atlas.status or "Loser" in atlas.status:
             atlas.playing = False
 
         enemy = ast.literal_eval(socket.recv(9216).decode('utf8'))
         atlas.blankMap = enemy["map"]
-        target = enemy["target"]
-        if "Winner" in target or "Loser" in target:
+        atlas.status = enemy["target"]
+        if "Winner" in atlas.status or "Loser" in atlas.status:
             atlas.playing = False
 
 

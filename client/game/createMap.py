@@ -1,7 +1,5 @@
 from game.createShip import taoMotTau
 from game.constants import *
-import pygame
-
 
 def createMap(banDo):
     for i in range(0,Map["doc"]):
@@ -10,18 +8,18 @@ def createMap(banDo):
             arr.append("water") 
         banDo.append(arr)
     
-    taoMotTau(banDo,kichThuoc27,"tau27")
-    taoMotTau(banDo,kichThuoc25,"tau25")
-    # taoMotTau(banDo,kichThuoc25,"Q")
-    taoMotTau(banDo,kichThuoc14,"tau14")
-    # taoMotTau(banDo,kichThuoc14,"9")
-    # taoMotTau(banDo,kichThuoc14,"8")
-    taoMotTau(banDo,kichThuoc12,"tau12")
-    # taoMotTau(banDo,kichThuoc12,"6")
-    # taoMotTau(banDo,kichThuoc12,"5")
-    # taoMotTau(banDo,kichThuoc11,"4")
-    # taoMotTau(banDo,kichThuoc11,"3")
-    taoMotTau(banDo,kichThuoc11,"tau11")
+    taoMotTau(banDo,kichThuoc27,"ship12")
+    taoMotTau(banDo,kichThuoc25,"ship11")
+    taoMotTau(banDo,kichThuoc25,"ship10")
+    taoMotTau(banDo,kichThuoc14,"ship9")
+    taoMotTau(banDo,kichThuoc14,"ship8")
+    taoMotTau(banDo,kichThuoc14,"ship7")
+    taoMotTau(banDo,kichThuoc12,"ship6")
+    taoMotTau(banDo,kichThuoc12,"ship5")
+    taoMotTau(banDo,kichThuoc12,"ship4")
+    taoMotTau(banDo,kichThuoc11,"ship3")
+    taoMotTau(banDo,kichThuoc11,"ship2")
+    taoMotTau(banDo,kichThuoc11,"ship1")
 
 
 
