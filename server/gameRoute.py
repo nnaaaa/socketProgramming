@@ -30,12 +30,13 @@ def attackRoute(client, data, enemy,blankMap):
         if isDestroyFullShip(blankMap,primeMap,sign):
             targetMe = "Enemy's ship was completely sunk 🚢 !!!"
             targetEnemy = "Enemy's ship was completely sunk 🚢 !!!"
-            
-            for i in range(0,10):
-                for j in range(0,10):
-                    if primeMap[i][j] == "sign":
+            for i in range(0,20):
+                for j in range(0,20):
+                    if primeMap[i][j] == sign:
                         blankMap[i][j] = "full"
                         enemyMap[i][j] = "full"
+
+
     if isEndGame(primeMap,blankMap):
         targetMe = "🥇 Winner winner chicken dinner!!!"
         targetEnemy = "🤏 Loser!"
@@ -56,8 +57,8 @@ def attackRoute(client, data, enemy,blankMap):
 
 
 def isDestroyFullShip(blankMap,primeMap,sign):
-    for i in range(0,10):
-        for j in range(0,10):
+    for i in range(0,20):
+        for j in range(0,20):
             if primeMap[i][j] == sign and blankMap[i][j] != "hit":
                 return False
     
@@ -65,8 +66,8 @@ def isDestroyFullShip(blankMap,primeMap,sign):
 
 
 def isEndGame(primeMap,blankMap):  
-    for i in range(0,10):
-        for j in range(0,10):
+    for i in range(0,20):
+        for j in range(0,20):
             if primeMap[i][j] != "water" and blankMap[i][j] != "full":
                 return False
     return True

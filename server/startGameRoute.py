@@ -22,7 +22,15 @@ def startGameRoute(client,data,usersOnline,enemy,myMap):
                 "game":"send_map_error",
             }
             client["socket"].send(bytes(str(obj),'utf8'))
-        
+    
+    elif(data["game"] == "reject"):
+        userOnline = list(filter(lambda user: user["account"] == data["account"],usersOnline))
+        enemy["account"] = userOnline[0]["account"]
+        enemy["socket"] = userOnline[0]["socket"]
+        obj = {
+            "game":"reject"
+        }
+        enemy["socket"].send(bytes(str(obj),'utf8'))
         
     elif(data["game"] == "send_map"):
         #6

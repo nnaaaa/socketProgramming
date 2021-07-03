@@ -20,8 +20,6 @@ def comparePassword(password):
         return True
 
 
-        
-
 
 
 

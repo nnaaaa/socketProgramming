@@ -1,7 +1,6 @@
 import ast
 from game.createMap import createMap
 from game.gamePlay import playerAttack,playerDefend
-from game.graphic import playerAttack,playerDefend
 
 def getUsersOnline(socket):
     obj = {"game":"start_game"}
@@ -26,6 +25,8 @@ def createRoom(option,room,account,socket):
     enemy = ast.literal_eval(socket.recv(9216).decode('utf8'))
     if enemy["game"] == "send_map_error":
         print("😪 Fail to invite")
+    elif enemy["game"] == "reject":
+        print("💔 Enemy reject")
     else:
         obj={
             "game":"recv_map",
@@ -62,3 +63,9 @@ def waiting(socket):
             #5
             socket.send(bytes(str(obj),'utf8'))
             playerDefend(socket,client2Map,enemy["account"])
+        elif chose == "N":
+            obj = {
+                "account":enemy["account"],
+                "game":"reject"
+            }
+            socket.send(bytes(str(obj),'utf8'))

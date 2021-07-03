@@ -6,6 +6,7 @@ import socket
 from authentication.validation import validate,comparePassword
 from api.userAPI import signin,signup,changePassword,checkUser,setInfo
 from api.gameAPI import getUsersOnline,waiting,createRoom
+from authentication.encrypt import encrypt, decrypt
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -39,7 +40,7 @@ while True:
             if validate(user):      
                 encrypt = input("🤔 Do you want to encrypt message before sending? ")
                 if encrypt == "Y":
-                    print("encrypt here")    # encrypt ở đây
+                    encrypt(user["password"])    # encrypt ở đây
                 if signin(user,s):
                     print("💚 Login successfully")
                     login = True
@@ -85,11 +86,6 @@ while True:
         chose = commandline.split(" ")
         createRoom(chose[0],chose[1],chose[3],s)
 
-
-
-    # elif chose == "" :
-    #     #do nothing
-        
     #game--------------------------------------------------------------------------------
     
     elif chose == "change_password":
@@ -114,9 +110,3 @@ while True:
 
     print("-"*50)
 
-    
-
-
-
-
-   
