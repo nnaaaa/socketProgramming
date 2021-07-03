@@ -6,14 +6,14 @@ class Atlas:
         self.myMap = myMap
         self.blankMap = blankMap
         self.waiting = waiting
-        self.playing = True
+        self.chosen = waiting
         self.socket = socket
         self.account = account
-        self.chosen = waiting
+        self.playing = True
         self.status = "c"
         self.switchBtn = pygame.Rect(10,10,100,30)
     
-    def displayMap(self,account2):
+    def displayMap(self,account):
         pygame.init()
         pygame.font.init()
         screen = pygame.display.set_mode((32*20+outline*2, 32*20+outline*2+header+10))
@@ -23,19 +23,22 @@ class Atlas:
 
         font = pygame.font.SysFont("Arial", 14)
         font2 = pygame.font.SysFont("Arial", 20)
-        
-
-        
+        fontBold = pygame.font.SysFont("Arial", 20,bold=pygame.font.Font.bold)
 
         while self.playing:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
-                    print("quit")   
+                    obj = {
+                        "attack":"False",
+                        "position":{"x":0,"y":0}
+                    } 
+                    self.socket.send(bytes(str(obj),'utf8'))
                     self.playing = False
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
                     self.onClick(pos)
 
+            screen.fill((15, 54, 105))
             
             if not self.chosen:
                 for i in range(0,20):
@@ -84,17 +87,19 @@ class Atlas:
                             screen.blit(ship11, (j*32+outline,i*32+outline + header+10))
                         if self.myMap[i][j] == "ship12":
                             screen.blit(ship12, (j*32+outline,i*32+outline + header+10))
-            screen.fill((15, 54, 105))
 
             pygame.draw.rect(screen, (255,255,255),self.switchBtn)
             switchScreenText = font.render("Switch Screen" , True, (15, 54, 105))
             width,height = pygame.font.Font.size(font, "Switch Screen")
             screen.blit(switchScreenText, (self.switchBtn.centerx-width/2, self.switchBtn.centery-height/2))
 
+            accountText = fontBold.render(account , True, (255,255,255))
+            width,height = pygame.font.Font.size(fontBold, account,)
+            screen.blit(accountText, (screen.get_width()-width-10, 10))
 
-            statusText = font2.render("This is your turn", True, (255, 255, 255))
+            statusText = font2.render("This is your turn", True, (248, 244, 15))
             if self.waiting:
-                statusText = font2.render("Waiting for your turn", True, (255, 255, 255))
+                statusText = font2.render("Waiting for your turn", True, (248, 244, 15))
             width,height = pygame.font.Font.size(font2, "This is your turn")
             if self.waiting:
                 width,height = pygame.font.Font.size(font2, "Waiting for your turn")
@@ -106,7 +111,7 @@ class Atlas:
     def onClick(self,pos):
         if pygame.Rect.collidepoint(self.switchBtn, pos):
             self.chosen = not self.chosen
-        if self.waiting:
+        if self.waiting or self.chosen:
             return
         for i in range(0,20):
             for j in range(0,20):

@@ -2,6 +2,7 @@ from userController import updatePoint
 
 
 def attackRoute(client, data, enemy,blankMap):
+
     x = data["position"]["x"] 
     y = data["position"]["y"] 
     primeMap = enemy["primeMap"]
@@ -37,10 +38,15 @@ def attackRoute(client, data, enemy,blankMap):
                         enemyMap[i][j] = "full"
 
 
-    if isEndGame(primeMap,blankMap):
+    if isEndGame(primeMap,blankMap) or not data["attack"]:
         targetMe = "🥇 Winner winner chicken dinner!!!"
         targetEnemy = "🤏 Loser!"
         updatePoint({"account":client["account"],"point":1000})
+
+    if data["attack"] == "False":
+        targetEnemy = "🥇 Winner winner chicken dinner!!!"
+        targetMe = "🤏 Loser!"
+        updatePoint({"account":enemy["account"],"point":1000})
     
     clientRespond = {
         "map":blankMap,
