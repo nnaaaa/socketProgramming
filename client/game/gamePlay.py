@@ -1,5 +1,4 @@
 import ast
-import pygame
 import threading
 from game.constants import *
 from game.graphic import Atlas
@@ -17,7 +16,6 @@ def playerAttack(socket,myMap,account):
             atlas.playing = False
             break
 
-
         me = ast.literal_eval(socket.recv(9216).decode('utf8'))
         atlas.waiting = False
         atlas.myMap = me["map"]
@@ -26,7 +24,7 @@ def playerAttack(socket,myMap,account):
             print(atlas.status)
             atlas.playing = False
             break
-     
+    del atlas
         
 def playerDefend(socket,myMap,account):
     blankMap = ast.literal_eval(socket.recv(9216).decode('utf8'))
@@ -49,5 +47,5 @@ def playerDefend(socket,myMap,account):
             print(atlas.status)
             atlas.playing = False
             break
-
+    del atlas
 

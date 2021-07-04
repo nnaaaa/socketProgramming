@@ -1,5 +1,6 @@
 import pygame
 from game.constants import *
+from game.attackAnimation import Explosion
 
 class Atlas:
     def __init__(self,socket,account,myMap,blankMap,waiting):
@@ -25,6 +26,7 @@ class Atlas:
         font2 = pygame.font.SysFont("Arial", 20)
         fontBold = pygame.font.SysFont("Arial", 20,bold=pygame.font.Font.bold)
 
+        explosion_group = pygame.sprite.Group()
         while self.playing:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT: 
@@ -34,12 +36,13 @@ class Atlas:
                     } 
                     self.socket.send(bytes(str(obj),'utf8'))
                     self.playing = False
-                if event.type == pygame.MOUSEBUTTONUP:
+                if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
-                    self.onClick(pos)
+                    self.onClick(explosion_group,pos)
 
             screen.fill((15, 54, 105))
-            
+            explosion_group.draw(screen)
+            explosion_group.update()
             if not self.chosen:
                 for i in range(0,20):
                     for j in range(0,20):
@@ -108,7 +111,7 @@ class Atlas:
             pygame.display.update()
         pygame.display.flip()
 
-    def onClick(self,pos):
+    def onClick(self,explosion_group,pos):
         if pygame.Rect.collidepoint(self.switchBtn, pos):
             self.chosen = not self.chosen
         if self.waiting or self.chosen:
@@ -121,7 +124,12 @@ class Atlas:
                             "attack":True,
                             "position":{"x":j,"y":i} 
                         }
+                        explosion = Explosion(pos[0], pos[1])
+                        explosion_group.add(explosion)
                         self.waiting = True
                         self.socket.send(bytes(str(obj),'utf8'))
+
+
+
 
 
