@@ -15,7 +15,7 @@ login = False
 connect = False
 
 
-s.connect((socket.gethostname(),8000))
+s.connect(('127.0.0.2',8000))
 connect = True
 
 while True:

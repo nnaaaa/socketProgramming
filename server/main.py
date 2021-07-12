@@ -7,9 +7,9 @@ from threading import Thread
 # from gameRoute import 
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-s.bind((socket.gethostname(),8000))
+s.bind(('127.0.0.2',8000))
 s.listen(5)
-print("😋 Server start at "+socket.gethostbyname(socket.gethostname()))
+print("😋 Server start at 127.0.0.2:8000")
 usersOnline = []
 # {"socket":,"account":"..."}
 
