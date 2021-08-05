@@ -6,7 +6,7 @@ import socket
 from authentication.validation import validate,comparePassword
 from api.userAPI import signin,signup,changePassword,checkUser,setInfo
 from api.gameAPI import getUsersOnline,waiting,createRoom
-from authentication.encrypt import encrypt, decrypt
+from authentication.encode import encrypt, decrypt
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 
@@ -15,8 +15,6 @@ login = False
 connect = False
 
 
-s.connect(('127.0.0.2',8000))
-connect = True
 
 while True:
     commandline = input()
@@ -26,10 +24,25 @@ while True:
     if chose == "quit":
         break
 
+    elif chose == "connect":
+        array = commandline.split(" ")
+        if len(array)<4:
+            print("🥵 Fail command line")
+            continue
+        ip = array[1]
+        port = int(array[3])
+        try:
+            s.connect((ip,port))
+            connect = True
+        except:
+            print("fail to connect")
+            connect = False
+
     elif not connect:
         continue
 
-    elif chose == "close" or chose == "end":    
+
+    elif chose == "close" or chose == "end":
         s.close()
         break
 
@@ -37,10 +50,12 @@ while True:
         chose = commandline.split(" ")
         if len(chose) == 2:
             user["account"] = chose[1]
-            if validate(user):      
-                encrypt = input("🤔 Do you want to encrypt message before sending? ")
-                if encrypt == "Y":
-                    encrypt(user["password"])    # encrypt ở đây
+            if validate(user):
+                user["isEncrypt"] = False
+                isEncrypt = input("🤔 Do you want to encrypt message before sending? ")
+                if isEncrypt == "Y":
+                    user["password"] = encrypt(user["password"])    # encrypt ở đây
+                    user["isEncrypt"] = True
                 if signin(user,s):
                     print("💚 Login successfully")
                     login = True
@@ -53,9 +68,11 @@ while True:
         if len(chose) == 2:
             user["account"] = chose[1]
             if validate(user):
-                encrypt = input("🤔 Do you want to encrypt message before sending? ")
-                if encrypt == "Y":
-                    print("encrypt here")    # encrypt ở đây
+                user["isEncrypt"] = False
+                isEncrypt = input("🤔 Do you want to encrypt message before sending? ")
+                if isEncrypt == "Y":
+                    user["password"] = encrypt(user["password"])    # encrypt ở đây
+                    user["isEncrypt"] = True
                 if signup(user,s):
                     print("🎄 Register successfully")  
         else:
@@ -94,11 +111,12 @@ while True:
     elif chose == "change_password":
         if not login:
             print("You haven't signed in")
-        if comparePassword(user["password"]):
+        if comparePassword(user,decrypt):
             user["password"] = stdiomask.getpass("new password: ")
-            encrypt = input("🤔 Do you want to encrypt message before sending? ")
-            if encrypt == "Y":
-                print("encrypt here")    # encrypt ở đây
+            isEncrypt = input("🤔 Do you want to encrypt message before sending? ")
+            if isEncrypt == "Y":
+                user["password"] = encrypt(user["password"])    # encrypt ở đây
+                user["isEncrypt"] = True
             changePassword(user,s)
             print("🥊 Update password successfully")
     

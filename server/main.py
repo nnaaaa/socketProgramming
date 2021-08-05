@@ -7,9 +7,9 @@ from threading import Thread
 # from gameRoute import 
 
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-s.bind(('127.0.0.2',8000))
+s.bind(('26.69.245.250',8000))
 s.listen(5)
-print("😋 Server start at 127.0.0.2:8000")
+print("😋 Server start at 26.69.246.14:8000")
 usersOnline = []
 # {"socket":,"account":"..."}
 
@@ -32,7 +32,9 @@ def Client(client,address):
             break
 
         data = ast.literal_eval(data.decode('utf8'))
-        
+
+        # print("data:",data)
+
         if (data.get("auth")):
             userRoute(client,data,usersOnline)
 
