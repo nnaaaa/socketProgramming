@@ -15,7 +15,7 @@ login = False
 connect = False
 
 
-s.connect(('127.0.0.2',8000))
+s.connect(('26.69.245.250',8000))
 connect = True
 
 while True:
