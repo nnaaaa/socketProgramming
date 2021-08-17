@@ -21,16 +21,15 @@ def userRoute(client, data, usersOnline):
         err = postRegister(data)
         client["socket"].send(bytes(str(err),'utf8'))
 
-
-
     elif data["auth"] == "online":
+        user = getUser(data)
         userOnline = list(filter(lambda item: item["account"] == data["account"],usersOnline))
-        isOnline = False
-        if len(userOnline) != 0 :
-            isOnline = True
-        client["socket"].send(bytes(str(isOnline),'utf8'))
+        user["isOnline"] = False
+        if len(userOnline) != 0:
+            user["isOnline"] = True
+        client["socket"].send(bytes(str(user),'utf8'))
 
-    elif (data["auth"] == "find") or (data["auth"] == "show_fullname") or (data["auth"] == "show_note") or (data["auth"] == "show_point") or (data["auth"] == "show_all") or (data["auth"] == "show_date"):
+    elif (data["auth"] == "find") or (data["auth"] == "show_fullname") or (data["auth"] == "show_note") or (data["auth"] == "show_point") or (data["auth"] == "show_all") or (data["auth"] == "show_date") or (data["auth"] == "show_point"):
         user = getUser(data)
         client["socket"].send(bytes(str(user),'utf8'))
 

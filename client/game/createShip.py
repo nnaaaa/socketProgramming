@@ -21,7 +21,6 @@ def taoMotTau(banDo,kichThuoc,sign):
                 taoTau(banDo, {"x":x,"y":y}, kichThuoc, chieuDoc,sign)
                 break
 
-
 def taoTau(banDo,viTri,kichThuoc,chieuDoc,sign):
     if chieuDoc:
         for i in range(viTri["x"],viTri["x"]+kichThuoc["rong"]):
@@ -33,8 +32,6 @@ def taoTau(banDo,viTri,kichThuoc,chieuDoc,sign):
         for i in range(viTri["x"],viTri["x"]+kichThuoc["dai"]):
             for j in range(viTri["y"],viTri["y"]+kichThuoc["rong"]):
                 banDo[i][j] = sign
-
-
 
 def xetTrungTau(banDo,kichThuoc,viTri,chieuDoc):
     if chieuDoc:

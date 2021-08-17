@@ -61,7 +61,6 @@ def attackRoute(client, data, enemy,blankMap):
     client["socket"].send(bytes(str(clientRespond),'utf8'))
     enemy["socket"].send(bytes(str(enemyRespond),'utf8'))
 
-
 def isDestroyFullShip(blankMap,primeMap,sign):
     for i in range(0,20):
         for j in range(0,20):
@@ -69,7 +68,6 @@ def isDestroyFullShip(blankMap,primeMap,sign):
                 return False
     
     return True
-
 
 def isEndGame(primeMap,blankMap):  
     for i in range(0,20):

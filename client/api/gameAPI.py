@@ -36,8 +36,6 @@ def createRoom(option,room,account,socket):
         print("Start game!")
         playerAttack(socket,client1Map,account)
 
-
-
 def waiting(socket):
     #3
     enemy = ast.literal_eval(socket.recv(9216).decode('utf8'))

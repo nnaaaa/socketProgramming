@@ -55,7 +55,6 @@ def startGameRoute(client,data,usersOnline,enemy,myMap):
         createBlankMap(myMap)
         client["socket"].send(bytes(str(myMap),'utf8'))
         
-
     elif(data["game"] == "recv_map"):
         #8 
         arr1 = []
