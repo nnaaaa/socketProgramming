@@ -9,6 +9,7 @@ Map = {
 soLuongTau = 12
 outline = 10
 header = 30
+mapImage = pygame.transform.scale(pygame.image.load("client/game/assets/water.gif"),(600,600)) 
 water = pygame.transform.scale(pygame.image.load("client/game/assets/border.png"),(30,30))
 hit = pygame.transform.scale(pygame.image.load("client/game/assets/hit.png"),(30,30))
 full = pygame.transform.scale(pygame.image.load("client/game/assets/full.png"),(30,30))

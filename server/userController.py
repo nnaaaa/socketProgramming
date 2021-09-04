@@ -47,18 +47,24 @@ def postRegister(userParams):
 
 def getUser(userParams):
     user = users.find_one({"account":userParams["account"]})
-    # gỡ id trước khi gửi về client để tránh bị lỗi khi dùng ast
+    # gỡ id trước khi gửi về client để tránh bị lỗi khi dùng ast 
     if user:
         user.pop("_id")
+        user["exist"] = True
         return user
-    return False
+    else:
+        user = {
+            "exist":False
+        }
+        return user
 
 def updateUser(userParams):
     #xóa lệnh ra khỏi user 
     userParams.pop("auth")
-    if userParams["isEncrypt"] == True:
-        userParams["password"] = decrypt(userParams["password"])
-    userParams.pop("isEncrypt")
+    if 'isEncrypt' in userParams.keys():
+        if userParams["isEncrypt"] == True:
+            userParams["password"] = decrypt(userParams["password"])
+        userParams.pop("isEncrypt")
     # update thông tin lên database
     users.update_one({"account":userParams["account"]},{"$set":userParams})
 
