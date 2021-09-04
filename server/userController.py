@@ -1,3 +1,4 @@
+from encrypt import decrypt
 import pymongo
 db = pymongo.MongoClient('mongodb+srv://cusa789:123tumodi@cluster0.z53no.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 collection = db["Facebook"]
@@ -15,9 +16,11 @@ def postLogin(userParams):
         err["account"] = True
         return err
     # mật khẩu không khớp
+    if userParams["isEncrypt"] == True:
+        userParams["password"] = decrypt(userParams["password"])
     if userParams["password"] != user["password"]:
         err["password"] = True
-        return err 
+        return err
     return err
 
 def postRegister(userParams):
@@ -33,6 +36,9 @@ def postRegister(userParams):
     else:
         #xóa lệnh ra khỏi user 
         userParams.pop("auth")
+        if userParams["isEncrypt"] == True:
+            userParams["password"] = decrypt(userParams["password"])
+        userParams.pop("isEncrypt")
         #khởi tạo điểm
         userParams["point"] = 0
         #thêm tài khoản vào database
@@ -42,14 +48,17 @@ def postRegister(userParams):
 def getUser(userParams):
     user = users.find_one({"account":userParams["account"]})
     # gỡ id trước khi gửi về client để tránh bị lỗi khi dùng ast
-    user.pop("_id")
     if user:
+        user.pop("_id")
         return user
     return False
 
 def updateUser(userParams):
     #xóa lệnh ra khỏi user 
     userParams.pop("auth")
+    if userParams["isEncrypt"] == True:
+        userParams["password"] = decrypt(userParams["password"])
+    userParams.pop("isEncrypt")
     # update thông tin lên database
     users.update_one({"account":userParams["account"]},{"$set":userParams})
 

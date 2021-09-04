@@ -11,9 +11,11 @@ def validate(user):
     else:
         return True
 
-def comparePassword(password):
+def comparePassword(user,decrypt):
+    if user["isEncrypt"] == True:
+        user["password"] = decrypt(user["password"])
     oldPassword = stdiomask.getpass("password: ")
-    if oldPassword != password:
+    if oldPassword != user["password"]:
         print("Wrong password")
         return False
     else:
