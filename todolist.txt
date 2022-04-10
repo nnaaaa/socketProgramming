@@ -2,6 +2,9 @@ Socket TCP:
 -connect [ip server] port [port server]  |oke
 -close |oke
 
+
+
+
 Manage users:
 -login [username]  |oke
 -register [username] |oke
